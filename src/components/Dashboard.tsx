@@ -198,9 +198,6 @@ export default function Dashboard({ user }: DashboardProps) {
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="text-center">
             <h1 className="text-3xl font-bold text-white mb-2">Create Podcast</h1>
-            <p className="text-zinc-400">
-              Paste your blog post content below and we'll convert it into an engaging podcast episode using ElevenLabs AI.
-            </p>
           </div>
 
           <Card className="bg-gradient-to-br from-zinc-900 to-zinc-950 border-zinc-800 shadow-2xl">
@@ -209,9 +206,6 @@ export default function Dashboard({ user }: DashboardProps) {
                 <Zap className="w-5 h-5 mr-2 text-yellow-400" />
                 Blog Post Content
               </CardTitle>
-              <CardDescription className="text-zinc-400">
-                Paste your blog post or article content here (300-1200 characters)
-              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <Textarea
