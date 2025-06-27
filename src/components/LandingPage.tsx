@@ -80,7 +80,11 @@ export default function LandingPage() {
             href="https://x.com/zanbuilds" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="transition-all duration-200 hover:scale-110 cursor-pointer ml-1"
+            className="transition-all duration-200 hover:scale-110 cursor-pointer ml-1 inline-block"
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open('https://x.com/zanbuilds', '_blank', 'noopener,noreferrer');
+            }}
           >
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
