@@ -75,13 +75,23 @@ export default function LandingPage() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.8 }}
         >
-          Currently in beta   • Follow us on{''}
+          Currently in beta • Follow us on
           <a 
             href="https://x.com/zanbuilds" 
             target="_blank" 
-            className="underline hover:text-zinc-300 transition-colors flex items-center gap-1"
+            rel="noopener noreferrer"
+            className="underline hover:text-zinc-300 transition-all duration-200 flex items-center gap-1 hover:scale-110 cursor-pointer"
           >
-            <X className="w-4 h-4" />
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="16" 
+              height="16" 
+              viewBox="0 0 50 50"
+              className="fill-current transition-all duration-200 hover:drop-shadow-sm"
+            >
+              <path d="M 5.9199219 6 L 20.582031 27.375 L 6.2304688 44 L 9.4101562 44 L 21.986328 29.421875 L 31.986328 44 L 44 44 L 28.681641 21.669922 L 42.199219 6 L 39.029297 6 L 27.275391 19.617188 L 17.933594 6 L 5.9199219 6 z M 9.7167969 8 L 16.880859 8 L 40.203125 42 L 33.039062 42 L 9.7167969 8 z"></path>
+            </svg>
+            X
           </a>
         </motion.div>
       </div>
