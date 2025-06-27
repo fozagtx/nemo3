@@ -8,6 +8,7 @@ import { Badge } from './ui/badge';
 import { Headphones, Download, Loader2, LogOut, User as UserIcon, Play, Pause, Mic, FileAudio, Zap } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { toast } from 'sonner';
+import { EnvDebug } from './EnvDebug';
 
 interface DashboardProps {
   user: User;
@@ -22,6 +23,13 @@ export default function Dashboard({ user }: DashboardProps) {
 
   // Get API key from environment variables
   const apiKey = import.meta.env.VITE_ELEVENLABS_API_KEY;
+
+  // Debug: Log environment variables (remove this after debugging)
+  console.log('Environment check:', {
+    hasApiKey: !!apiKey,
+    apiKeyLength: apiKey?.length || 0,
+    allEnvVars: Object.keys(import.meta.env).filter(key => key.startsWith('VITE_'))
+  });
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
@@ -52,7 +60,7 @@ export default function Dashboard({ user }: DashboardProps) {
     }
 
     if (!apiKey) {
-      toast.error('ElevenLabs API key not configured. Please contact administrator.');
+      toast.error(`ElevenLabs API key not configured. Found: ${apiKey ? 'Yes' : 'No'}. Please contact administrator.`);
       return;
     }
 
@@ -196,6 +204,9 @@ export default function Dashboard({ user }: DashboardProps) {
       {/* Main Content */}
       <div className="flex-1 p-8">
         <div className="max-w-4xl mx-auto space-y-8">
+          {/* Temporary debug component - remove after fixing */}
+          <EnvDebug />
+          
           <div className="text-center">
             <h1 className="text-3xl font-bold text-white mb-2">Create Podcast</h1>
           </div>
