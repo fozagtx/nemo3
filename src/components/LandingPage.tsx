@@ -57,7 +57,7 @@ export default function LandingPage() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
-          Powered by ElevenLabs AI • Convert in seconds • Studio-quality audio
+          Powered by ElevenLabs AI 
         </motion.div>
       </div>
     </div>
