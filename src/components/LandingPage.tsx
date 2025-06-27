@@ -49,51 +49,13 @@ export default function LandingPage() {
             Lightning-fast conversion with studio-quality results powered by ElevenLabs AI.
           </motion.p>
 
-          {/* Feature highlights */}
-          <motion.div
-            className="mt-8 flex flex-wrap justify-center gap-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-          >
-            <div className="flex items-center space-x-2 text-zinc-300">
-              <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
-                <Zap className="w-4 h-4 text-black" />
-              </div>
-              <span className="font-medium">Lightning Fast</span>
-            </div>
-            <div className="flex items-center space-x-2 text-zinc-300">
-              <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
-                <Volume2 className="w-4 h-4 text-black" />
-              </div>
-              <span className="font-medium">Studio Quality</span>
-            </div>
-            <div className="flex items-center space-x-2 text-zinc-300">
-              <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
-                <Clock className="w-4 h-4 text-black" />
-              </div>
-              <span className="font-medium">Seconds Not Hours</span>
-            </div>
-          </motion.div>
-
-          {signupCount > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-              className="mt-12 inline-flex items-center gap-2 text-sm text-zinc-400 justify-center"
-            >
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              <span>{signupCount.toLocaleString()} creators converting content daily</span>
-            </motion.div>
-          )}
         </motion.div>
 
         <motion.div
           className="mb-8 text-center text-sm text-zinc-400/60 flex flex-row gap-2 items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.7, duration: 0.8 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
         >
           Powered by ElevenLabs AI • Convert in seconds • Studio-quality audio
         </motion.div>
