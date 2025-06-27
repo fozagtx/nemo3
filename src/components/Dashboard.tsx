@@ -24,13 +24,6 @@ export default function Dashboard({ user }: DashboardProps) {
   // Get API key from environment variables
   const apiKey = import.meta.env.VITE_ELEVENLABS_API_KEY;
 
-  // Debug: Log environment variables (remove this after debugging)
-  console.log('Environment check:', {
-    hasApiKey: !!apiKey,
-    apiKeyLength: apiKey?.length || 0,
-    allEnvVars: Object.keys(import.meta.env).filter(key => key.startsWith('VITE_'))
-  });
-
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     toast.success('Signed out successfully');
@@ -60,7 +53,14 @@ export default function Dashboard({ user }: DashboardProps) {
     }
 
     if (!apiKey) {
-      toast.error(`ElevenLabs API key not configured. Found: ${apiKey ? 'Yes' : 'No'}. Please contact administrator.`);
+      toast.error('ElevenLabs API key not configured. Please check your environment variables.');
+      console.error('Missing VITE_ELEVENLABS_API_KEY environment variable');
+      return;
+    }
+
+    if (!apiKey.startsWith('sk-')) {
+      toast.error('Invalid ElevenLabs API key format. Key should start with "sk-"');
+      console.error('Invalid API key format:', apiKey.substring(0, 5) + '...');
       return;
     }
 
@@ -91,8 +91,22 @@ export default function Dashboard({ user }: DashboardProps) {
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.detail?.message || `API Error: ${response.status}`);
+        let errorMessage = `API Error: ${response.status}`;
+        
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.detail?.message || errorData.message || errorMessage;
+        } catch (e) {
+          // If we can't parse the error response, use the status
+        }
+        
+        console.error('ElevenLabs API Error:', {
+          status: response.status,
+          statusText: response.statusText,
+          errorMessage
+        });
+        
+        throw new Error(errorMessage);
       }
 
       const audioBlob = await response.blob();
@@ -101,10 +115,13 @@ export default function Dashboard({ user }: DashboardProps) {
       toast.success('Blog post converted to podcast successfully!');
     } catch (error: any) {
       console.error('Conversion error:', error);
-      if (error.message.includes('401')) {
+      
+      if (error.message.includes('401') || error.message.includes('Unauthorized')) {
         toast.error('Invalid API key. Please contact administrator.');
-      } else if (error.message.includes('quota')) {
+      } else if (error.message.includes('quota') || error.message.includes('limit')) {
         toast.error('API quota exceeded. Please check your ElevenLabs account.');
+      } else if (error.message.includes('network') || error.message.includes('fetch')) {
+        toast.error('Network error. Please check your internet connection.');
       } else {
         toast.error(`Failed to convert: ${error.message}`);
       }
@@ -204,9 +221,6 @@ export default function Dashboard({ user }: DashboardProps) {
       {/* Main Content */}
       <div className="flex-1 p-8">
         <div className="max-w-4xl mx-auto space-y-8">
-          {/* Temporary debug component - remove after fixing */}
-          <EnvDebug />
-          
           <div className="text-center">
             <h1 className="text-3xl font-bold text-white mb-2">Create Podcast</h1>
           </div>
