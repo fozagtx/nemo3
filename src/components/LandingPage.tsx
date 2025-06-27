@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Twitter } from 'lucide-react';
+import { ArrowRight, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from './Header';
 import { Button } from './ui/button';
@@ -60,6 +60,7 @@ export default function LandingPage() {
             <Button
               className="px-6 h-10 text-sm bg-yellow-400 text-black hover:bg-yellow-500 font-medium transition-all duration-200 shadow-lg hover:shadow-xl"
               onClick={() => navigate('/signin')}
+              type="button"
             >
               Get Started
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -82,8 +83,8 @@ export default function LandingPage() {
             rel="noopener noreferrer"
             className="underline hover:text-zinc-300 transition-colors flex items-center gap-1"
           >
-            <Twitter className="w-4 h-4" />
-            Twitter
+            <X className="w-4 h-4" />
+            X
           </a>
         </motion.div>
       </div>
