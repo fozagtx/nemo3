@@ -14,12 +14,12 @@ export default function LandingPage() {
       <Header />
 
       {/* Main Content */}
-      <div className="min-h-[calc(100vh-6rem)] supports-[height:100dvh]:min-h-[calc(100dvh-6rem)] flex flex-col justify-between items-center text-center px-4 pt-8">
+      <div className="min-h-[calc(100vh-6rem)] supports-[height:100dvh]:min-h-[calc(100dvh-6rem)] flex flex-col justify-between items-center text-center px-4 pt-4">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
-          className="max-w-3xl mx-auto w-full flex-1 flex flex-col justify-center mt-8"
+          className="max-w-3xl mx-auto w-full flex-1 flex flex-col justify-center mt-4"
         >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -40,7 +40,7 @@ export default function LandingPage() {
           </motion.div>
 
           <motion.p
-            className="mt-10 text-base sm:text-xl text-zinc-400 font-light tracking-wide max-w-3xl mx-auto"
+            className="mt-8 text-sm sm:text-base text-zinc-400 font-light tracking-wide max-w-2xl mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
@@ -52,7 +52,7 @@ export default function LandingPage() {
         </motion.div>
 
         <motion.div
-          className="mb-8 text-center text-sm text-zinc-400/60 flex flex-row gap-2 items-center justify-center"
+          className="mb-6 text-center text-xs text-zinc-400/60 flex flex-row gap-2 items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
