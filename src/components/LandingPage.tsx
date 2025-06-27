@@ -75,11 +75,10 @@ export default function LandingPage() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.8 }}
         >
-          Currently in beta • Follow us on{'https://x.com/zanbuilds '}
+          Currently in beta   • Follow us on{''}
           <a 
             href="https://x.com/zanbuilds" 
             target="_blank" 
-            rel="noopener noreferrer"
             className="underline hover:text-zinc-300 transition-colors flex items-center gap-1"
           >
             <X className="w-4 h-4" />
