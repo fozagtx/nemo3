@@ -33,8 +33,7 @@ export function Header() {
             className="text-sm bg-yellow-400 text-black hover:bg-yellow-500"
             onClick={handleGetStarted}
           >
-            Get Started
-            <ArrowRight className="h-4 w-4" />
+            Sign In
           </Button>
         </nav>
       </div>
