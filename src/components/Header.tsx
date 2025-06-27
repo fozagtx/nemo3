@@ -1,14 +1,12 @@
-"use client";
-
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
-import { Headphones, ArrowRight } from 'lucide-react';
+import { Headphones } from 'lucide-react';
 
 export function Header() {
   const navigate = useNavigate();
 
-  const handleGetStarted = () => {
+  const handleSignIn = () => {
     navigate('/signin');
   };
 
@@ -31,7 +29,7 @@ export function Header() {
           <Button 
             size="sm" 
             className="text-sm bg-yellow-400 text-black hover:bg-yellow-500"
-            onClick={handleGetStarted}
+            onClick={handleSignIn}
           >
             Sign In
           </Button>

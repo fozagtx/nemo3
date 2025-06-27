@@ -1,13 +1,8 @@
-"use client";
-
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Zap, Clock, Volume2 } from 'lucide-react';
 import { Header } from './Header';
 
 export default function LandingPage() {
-  const navigate = useNavigate();
-
   const signupCount = 100;
 
   return (
