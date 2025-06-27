@@ -72,10 +72,10 @@ export default function SignInPage() {
         <div className="flex items-center space-x-2">
           <img 
             src="/nemo-g.png" 
-            alt="PodcastAI Logo" 
+            alt="nimo3 Logo" 
             className="w-8 h-8 rounded-sm"
           />
-          <span className="text-white font-semibold text-lg">PodcastAI</span>
+          <span className="text-white font-semibold text-lg">nimo3</span>
         </div>
       </nav>
 

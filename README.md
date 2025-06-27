@@ -1,4 +1,4 @@
-# PodcastAI
+# nimo3
 
 Transform your blog posts into engaging audio content in seconds using ElevenLabs AI.
 

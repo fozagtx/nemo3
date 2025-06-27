@@ -139,10 +139,10 @@ export default function Dashboard({ user }: DashboardProps) {
         <div className="flex items-center space-x-3 mb-8">
           <img 
             src="/nemo-g.png" 
-            alt="PodcastAI Logo" 
+            alt="nimo3 Logo" 
             className="w-10 h-10 rounded-lg"
           />
-          <span className="text-white font-semibold text-lg">PodcastAI</span>
+          <span className="text-white font-semibold text-lg">nimo3</span>
         </div>
 
         <div className="space-y-6">
