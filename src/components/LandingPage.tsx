@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Twitter } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from './Header';
 import { Button } from './ui/button';
@@ -70,7 +70,7 @@ export default function LandingPage() {
 
         {/* Footer */}
         <motion.div
-          className="mb-8 text-center text-sm text-zinc-400/60 flex flex-row gap-2 items-center justify-center"
+          className="mb-8 text-center text-sm text-white flex flex-row gap-2 items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.8 }}
@@ -80,9 +80,10 @@ export default function LandingPage() {
             href="https://x.com/zanbuilds" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="underline hover:text-zinc-300 transition-colors"
+            className="underline hover:text-zinc-300 transition-colors flex items-center gap-1"
           >
-            X
+            <Twitter className="w-4 h-4" />
+            Twitter
           </a>
         </motion.div>
       </div>
