@@ -56,16 +56,6 @@ export default function LandingPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
-            <button
-              className="px-6 h-10 text-sm bg-yellow-400 text-black hover:bg-yellow-500 font-medium transition-all duration-200 shadow-lg hover:shadow-xl rounded-md cursor-pointer"
-              onClick={() => {
-                console.log('Get Started clicked!');
-                navigate('/signin');
-              }}
-            >
-              Get Started
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </button>
           </motion.div>
 
         </motion.div>
