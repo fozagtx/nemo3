@@ -8,6 +8,10 @@ import { Headphones, ArrowRight } from 'lucide-react';
 export function Header() {
   const navigate = useNavigate();
 
+  const handleGetStarted = () => {
+    navigate('/signin');
+  };
+
   return (
     <div className="mx-4 md:mx-0">
       <div className="bg-[#1D1D1D] border border-white/10 rounded-2xl max-w-3xl mx-auto mt-4 pl-4 pr-[14px] flex items-center justify-between h-16">
@@ -27,7 +31,7 @@ export function Header() {
           <Button 
             size="sm" 
             className="text-sm bg-yellow-400 text-black hover:bg-yellow-500"
-            onClick={() => navigate('/signin')}
+            onClick={handleGetStarted}
           >
             Get Started
             <ArrowRight className="h-4 w-4" />
