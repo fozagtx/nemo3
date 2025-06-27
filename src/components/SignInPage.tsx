@@ -70,9 +70,11 @@ export default function SignInPage() {
         </Button>
         
         <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-yellow-400 rounded-sm flex items-center justify-center">
-            <Headphones className="w-5 h-5 text-black" />
-          </div>
+          <img 
+            src="/nemo-g.png" 
+            alt="PodcastAI Logo" 
+            className="w-8 h-8 rounded-sm"
+          />
           <span className="text-white font-semibold text-lg">PodcastAI</span>
         </div>
       </nav>

@@ -5,9 +5,7 @@ import { Textarea } from './ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Separator } from './ui/separator';
 import { Badge } from './ui/badge';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Headphones, Download, Loader2, LogOut, User as UserIcon, Play, Pause, Settings } from 'lucide-react';
+import { Headphones, Download, Loader2, LogOut, User as UserIcon, Play, Pause, Mic, FileAudio, Zap } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { toast } from 'sonner';
 
@@ -20,9 +18,10 @@ export default function Dashboard({ user }: DashboardProps) {
   const [isConverting, setIsConverting] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [apiKey, setApiKey] = useState('');
-  const [showApiKeyInput, setShowApiKeyInput] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  // Get API key from environment variables
+  const apiKey = import.meta.env.VITE_ELEVENLABS_API_KEY;
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
@@ -52,9 +51,8 @@ export default function Dashboard({ user }: DashboardProps) {
       return;
     }
 
-    if (!apiKey.trim()) {
-      toast.error('Please enter your ElevenLabs API key');
-      setShowApiKeyInput(true);
+    if (!apiKey) {
+      toast.error('ElevenLabs API key not configured. Please contact administrator.');
       return;
     }
 
@@ -96,8 +94,7 @@ export default function Dashboard({ user }: DashboardProps) {
     } catch (error: any) {
       console.error('Conversion error:', error);
       if (error.message.includes('401')) {
-        toast.error('Invalid API key. Please check your ElevenLabs API key.');
-        setShowApiKeyInput(true);
+        toast.error('Invalid API key. Please contact administrator.');
       } else if (error.message.includes('quota')) {
         toast.error('API quota exceeded. Please check your ElevenLabs account.');
       } else {
@@ -138,24 +135,48 @@ export default function Dashboard({ user }: DashboardProps) {
   return (
     <div className="min-h-screen bg-zinc-950 flex">
       {/* Sidebar */}
-      <div className="w-64 bg-zinc-900 border-r border-zinc-800 p-6">
-        <div className="flex items-center space-x-2 mb-8">
-          <div className="w-8 h-8 bg-yellow-400 rounded-sm flex items-center justify-center">
-            <Headphones className="w-5 h-5 text-black" />
-          </div>
+      <div className="w-72 bg-gradient-to-b from-zinc-900 to-zinc-950 border-r border-zinc-800 p-6">
+        <div className="flex items-center space-x-3 mb-8">
+          <img 
+            src="/nemo-g.png" 
+            alt="PodcastAI Logo" 
+            className="w-10 h-10 rounded-lg"
+          />
           <span className="text-white font-semibold text-lg">PodcastAI</span>
         </div>
 
-        <div className="space-y-4">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-zinc-800 rounded-full flex items-center justify-center">
+        <div className="space-y-6">
+          <div className="flex items-center space-x-3 p-3 bg-zinc-800/50 rounded-lg">
+            <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center">
               <UserIcon className="w-5 h-5 text-zinc-400" />
             </div>
             <div>
               <div className="text-white font-medium">
                 {user.user_metadata?.full_name || 'User'}
               </div>
-              <div className="text-zinc-400 text-sm">{user.email}</div>
+              <div className="text-zinc-400 text-xs truncate max-w-[140px]">{user.email}</div>
+            </div>
+          </div>
+
+          <Separator className="bg-zinc-800" />
+
+          <div className="space-y-2">
+            <h3 className="text-zinc-400 text-xs font-medium uppercase tracking-wider">Quick Stats</h3>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between p-3 bg-zinc-800/30 rounded-lg">
+                <div className="flex items-center space-x-2">
+                  <Mic className="w-4 h-4 text-yellow-400" />
+                  <span className="text-zinc-300 text-sm">Conversions</span>
+                </div>
+                <span className="text-white font-medium">0</span>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-zinc-800/30 rounded-lg">
+                <div className="flex items-center space-x-2">
+                  <FileAudio className="w-4 h-4 text-green-400" />
+                  <span className="text-zinc-300 text-sm">Audio Files</span>
+                </div>
+                <span className="text-white font-medium">0</span>
+              </div>
             </div>
           </div>
 
@@ -163,16 +184,7 @@ export default function Dashboard({ user }: DashboardProps) {
 
           <Button 
             variant="ghost" 
-            className="w-full justify-start text-zinc-400 hover:text-white hover:bg-zinc-800"
-            onClick={() => setShowApiKeyInput(!showApiKeyInput)}
-          >
-            <Settings className="w-4 h-4 mr-2" />
-            API Settings
-          </Button>
-
-          <Button 
-            variant="ghost" 
-            className="w-full justify-start text-zinc-400 hover:text-white hover:bg-zinc-800"
+            className="w-full justify-start text-zinc-400 hover:text-white hover:bg-zinc-800/50 transition-all duration-200"
             onClick={handleSignOut}
           >
             <LogOut className="w-4 h-4 mr-2" />
@@ -184,51 +196,19 @@ export default function Dashboard({ user }: DashboardProps) {
       {/* Main Content */}
       <div className="flex-1 p-8">
         <div className="max-w-4xl mx-auto space-y-8">
-          <div>
+          <div className="text-center">
             <h1 className="text-3xl font-bold text-white mb-2">Create Podcast</h1>
             <p className="text-zinc-400">
               Paste your blog post content below and we'll convert it into an engaging podcast episode using ElevenLabs AI.
             </p>
           </div>
 
-          {showApiKeyInput && (
-            <Card className="bg-zinc-900 border-zinc-800">
-              <CardHeader>
-                <CardTitle className="text-white">ElevenLabs API Configuration</CardTitle>
-                <CardDescription className="text-zinc-400">
-                  Enter your ElevenLabs API key to enable text-to-speech conversion
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="apiKey" className="text-white">API Key</Label>
-                  <Input
-                    id="apiKey"
-                    type="password"
-                    placeholder="Enter your ElevenLabs API key"
-                    value={apiKey}
-                    onChange={(e) => setApiKey(e.target.value)}
-                    className="bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500"
-                  />
-                </div>
-                <div className="text-sm text-zinc-400">
-                  Get your API key from{' '}
-                  <a 
-                    href="https://elevenlabs.io/app/speech-synthesis" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-white hover:underline"
-                  >
-                    ElevenLabs Dashboard
-                  </a>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          <Card className="bg-zinc-900 border-zinc-800">
+          <Card className="bg-gradient-to-br from-zinc-900 to-zinc-950 border-zinc-800 shadow-2xl">
             <CardHeader>
-              <CardTitle className="text-white">Blog Post Content</CardTitle>
+              <CardTitle className="text-white flex items-center">
+                <Zap className="w-5 h-5 mr-2 text-yellow-400" />
+                Blog Post Content
+              </CardTitle>
               <CardDescription className="text-zinc-400">
                 Paste your blog post or article content here (300-1200 characters)
               </CardDescription>
@@ -238,7 +218,7 @@ export default function Dashboard({ user }: DashboardProps) {
                 placeholder="Paste your blog post content here..."
                 value={blogContent}
                 onChange={(e) => setBlogContent(e.target.value)}
-                className="min-h-[300px] bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500 resize-none"
+                className="min-h-[300px] bg-zinc-800/50 border-zinc-700 text-white placeholder:text-zinc-500 resize-none focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200"
               />
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
@@ -264,7 +244,7 @@ export default function Dashboard({ user }: DashboardProps) {
                 <Button 
                   onClick={convertToAudio}
                   disabled={isConverting || !isValidLength}
-                  className="bg-yellow-400 text-black hover:bg-yellow-500"
+                  className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black hover:from-yellow-500 hover:to-yellow-600 transition-all duration-200 shadow-lg"
                 >
                   {isConverting ? (
                     <>
@@ -280,7 +260,7 @@ export default function Dashboard({ user }: DashboardProps) {
           </Card>
 
           {audioUrl && (
-            <Card className="bg-zinc-900 border-zinc-800">
+            <Card className="bg-gradient-to-br from-zinc-900 to-zinc-950 border-zinc-800 shadow-2xl">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <Headphones className="w-5 h-5 mr-2" />
@@ -292,9 +272,9 @@ export default function Dashboard({ user }: DashboardProps) {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-zinc-800 rounded-lg">
+                  <div className="flex items-center justify-between p-4 bg-gradient-to-r from-zinc-800 to-zinc-800/50 rounded-lg">
                     <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
+                      <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-lg flex items-center justify-center shadow-lg">
                         <Headphones className="w-6 h-6 text-black" />
                       </div>
                       <div>
@@ -310,7 +290,7 @@ export default function Dashboard({ user }: DashboardProps) {
                         onClick={togglePlayback}
                         size="sm"
                         variant="outline"
-                        className="border-zinc-600 text-white hover:bg-zinc-700"
+                        className="border-zinc-600 text-white hover:bg-zinc-700 transition-all duration-200"
                       >
                         {isPlaying ? (
                           <>
@@ -327,7 +307,7 @@ export default function Dashboard({ user }: DashboardProps) {
                       <Button 
                         onClick={downloadAudio}
                         size="sm"
-                        className="bg-yellow-400 text-black hover:bg-yellow-500"
+                        className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black hover:from-yellow-500 hover:to-yellow-600 transition-all duration-200 shadow-lg"
                       >
                         <Download className="w-4 h-4 mr-2" />
                         Download
