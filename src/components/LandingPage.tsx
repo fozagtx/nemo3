@@ -1,12 +1,7 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, X } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { Header } from './Header';
-import { Button } from './ui/button';
 
 export default function LandingPage() {
-  const navigate = useNavigate();
-
   return (
     <div className="min-h-screen bg-zinc-950 relative overflow-hidden">
       {/* Background Pattern */}

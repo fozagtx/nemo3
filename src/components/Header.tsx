@@ -1,7 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
-import { Badge } from './ui/badge';
-import { Headphones } from 'lucide-react';
 
 export function Header() {
   const navigate = useNavigate();
