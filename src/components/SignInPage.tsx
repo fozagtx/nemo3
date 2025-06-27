@@ -83,6 +83,13 @@ export default function SignInPage() {
       <div className="relative z-10 flex items-center justify-center min-h-[calc(100vh-120px)] px-6">
         <Card className="w-full max-w-md bg-zinc-900 border-zinc-800">
           <CardHeader className="text-center">
+            <div className="flex justify-center mb-4">
+              <img 
+                src="/nemo-g.png" 
+                alt="nimo3 Logo" 
+                className="w-12 h-12 rounded-lg"
+              />
+            </div>
             <CardTitle className="text-2xl text-white">Welcome</CardTitle>
             <CardDescription className="text-zinc-400">
               Sign in to your account or create a new one
