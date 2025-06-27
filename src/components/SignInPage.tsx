@@ -70,7 +70,7 @@ export default function SignInPage() {
         </Button>
         
         <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-white rounded-sm flex items-center justify-center">
+          <div className="w-8 h-8 bg-yellow-400 rounded-sm flex items-center justify-center">
             <Headphones className="w-5 h-5 text-black" />
           </div>
           <span className="text-white font-semibold text-lg">PodcastAI</span>
@@ -114,7 +114,7 @@ export default function SignInPage() {
               </div>
               <Button 
                 type="submit" 
-                className="w-full bg-white text-black hover:bg-zinc-200"
+                className="w-full bg-yellow-400 text-black hover:bg-yellow-500"
                 disabled={loading}
               >
                 {loading ? 'Please wait...' : 'Continue'}

@@ -140,7 +140,7 @@ export default function Dashboard({ user }: DashboardProps) {
       {/* Sidebar */}
       <div className="w-64 bg-zinc-900 border-r border-zinc-800 p-6">
         <div className="flex items-center space-x-2 mb-8">
-          <div className="w-8 h-8 bg-white rounded-sm flex items-center justify-center">
+          <div className="w-8 h-8 bg-yellow-400 rounded-sm flex items-center justify-center">
             <Headphones className="w-5 h-5 text-black" />
           </div>
           <span className="text-white font-semibold text-lg">PodcastAI</span>
@@ -264,7 +264,7 @@ export default function Dashboard({ user }: DashboardProps) {
                 <Button 
                   onClick={convertToAudio}
                   disabled={isConverting || !isValidLength}
-                  className="bg-white text-black hover:bg-zinc-200"
+                  className="bg-yellow-400 text-black hover:bg-yellow-500"
                 >
                   {isConverting ? (
                     <>
@@ -327,7 +327,7 @@ export default function Dashboard({ user }: DashboardProps) {
                       <Button 
                         onClick={downloadAudio}
                         size="sm"
-                        className="bg-white text-black hover:bg-zinc-200"
+                        className="bg-yellow-400 text-black hover:bg-yellow-500"
                       >
                         <Download className="w-4 h-4 mr-2" />
                         Download
