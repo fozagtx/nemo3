@@ -22,9 +22,6 @@ export function Header() {
             />
             <span className="text-xl font-medium hidden md:block text-white">nimo3</span>
           </div>
-          <Badge variant="secondary" className="bg-zinc-800 text-zinc-300 border-zinc-700">
-            Built with bolt.new
-          </Badge>
         </div>
         
         <nav className="flex items-center gap-3">
