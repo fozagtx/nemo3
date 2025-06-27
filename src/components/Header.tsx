@@ -28,7 +28,7 @@ export function Header() {
         <nav className="flex items-center gap-3">
           <Button 
             size="sm" 
-            className="text-sm bg-yellow-400 text-black hover:bg-yellow-500"
+            className="text-sm bg-yellow-400 text-black hover:bg-yellow-500 cursor-pointer relative z-10 px-4 py-2 font-medium transition-colors duration-200"
             onClick={handleSignIn}
           >
             Sign In
