@@ -48,7 +48,6 @@ export default function LandingPage() {
             transition={{ delay: 0.4, duration: 0.8 }}
           >
             Copy paste blogs and process into ready audio and listen. 
-            Lightning-fast conversion with studio-quality results powered by ElevenLabs AI.
           </motion.p>
 
           <motion.div
@@ -76,7 +75,7 @@ export default function LandingPage() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.8 }}
         >
-          Currently in beta • Follow us on{' '}
+          Currently in beta • Follow us on{'https://x.com/zanbuilds '}
           <a 
             href="https://x.com/zanbuilds" 
             target="_blank" 
