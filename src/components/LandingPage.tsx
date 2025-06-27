@@ -58,8 +58,7 @@ export default function LandingPage() {
             transition={{ delay: 0.6, duration: 0.8 }}
           >
             <Button
-              size="lg"
-              className="px-8 h-12 text-base bg-yellow-400 text-black hover:bg-yellow-500 font-medium transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="px-6 h-10 text-sm bg-yellow-400 text-black hover:bg-yellow-500 font-medium transition-all duration-200 shadow-lg hover:shadow-xl"
               onClick={() => navigate('/signin')}
             >
               Get Started
@@ -76,7 +75,15 @@ export default function LandingPage() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.8 }}
         >
-          Currently in beta • Open source on Github 5.9k+ • Follow us on Twitter
+          Currently in beta • Follow us on{' '}
+          <a 
+            href="https://x.com/zanbuilds" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="underline hover:text-zinc-300 transition-colors"
+          >
+            X
+          </a>
         </motion.div>
       </div>
     </div>
