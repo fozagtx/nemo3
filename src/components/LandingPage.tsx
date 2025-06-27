@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
-import { Zap, Clock, Volume2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Header } from './Header';
+import { Button } from './ui/button';
 
 export default function LandingPage() {
-  const signupCount = 100;
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-zinc-950 relative overflow-hidden">
@@ -49,16 +51,24 @@ export default function LandingPage() {
             Lightning-fast conversion with studio-quality results powered by ElevenLabs AI.
           </motion.p>
 
+          <motion.div
+            className="mt-10 flex justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            <Button
+              size="lg"
+              className="px-8 h-12 text-base bg-yellow-400 text-black hover:bg-yellow-500 font-medium transition-all duration-200 shadow-lg hover:shadow-xl"
+              onClick={() => navigate('/signin')}
+            >
+              Get Started
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </motion.div>
+
         </motion.div>
 
-        <motion.div
-          className="mb-6 text-center text-xs text-zinc-400/60 flex flex-row gap-2 items-center justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-        >
-          Powered by ElevenLabs AI 
-        </motion.div>
       </div>
     </div>
   );
