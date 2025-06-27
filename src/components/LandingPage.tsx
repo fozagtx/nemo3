@@ -69,6 +69,15 @@ export default function LandingPage() {
 
         </motion.div>
 
+        {/* Footer */}
+        <motion.div
+          className="mb-8 text-center text-sm text-zinc-400/60 flex flex-row gap-2 items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 0.8 }}
+        >
+          Currently in beta • Open source on Github 5.9k+ • Follow us on Twitter
+        </motion.div>
       </div>
     </div>
   );
