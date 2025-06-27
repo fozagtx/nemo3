@@ -4,7 +4,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Card, CardContent } from './ui/card';
-import { ArrowLeft, Mail, Lock, Loader2, Zap, Clock, Volume2 } from 'lucide-react';
+import { ArrowLeft, Mail, Lock, Loader2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { toast } from 'sonner';
 
@@ -72,114 +72,74 @@ export default function SignInPage() {
 
       {/* Main Content */}
       <div className="relative z-10 flex items-center justify-center min-h-[calc(100vh-120px)] px-6">
-        <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="flex flex-col items-center space-y-8 max-w-sm w-full">
           
-          {/* Left Side - Text Content */}
-          <div className="space-y-8 text-center lg:text-left">
-            <div>
-              <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
-                Transform Your
-                <span className="block text-yellow-400">Blog Posts</span>
-                into Audio
-              </h1>
-              <p className="text-lg text-zinc-400 leading-relaxed">
-                Convert your written content into engaging audio experiences in seconds using advanced AI technology.
-              </p>
-            </div>
-
-            {/* Feature highlights */}
-            <div className="space-y-4">
-              <div className="flex items-center space-x-3 justify-center lg:justify-start">
-                <div className="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-black" />
-                </div>
-                <span className="text-white font-medium">Lightning Fast Conversion</span>
-              </div>
-              <div className="flex items-center space-x-3 justify-center lg:justify-start">
-                <div className="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center">
-                  <Volume2 className="w-5 h-5 text-black" />
-                </div>
-                <span className="text-white font-medium">Studio Quality Audio</span>
-              </div>
-              <div className="flex items-center space-x-3 justify-center lg:justify-start">
-                <div className="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center">
-                  <Clock className="w-5 h-5 text-black" />
-                </div>
-                <span className="text-white font-medium">Ready in Seconds</span>
-              </div>
-            </div>
+          {/* Logo */}
+          <div className="flex justify-center">
+            <img 
+              src="/nemo-g.png" 
+              alt="nimo3 Logo" 
+              className="w-20 h-20 rounded-xl shadow-2xl"
+            />
           </div>
 
-          {/* Right Side - Sign In Form */}
-          <div className="flex flex-col items-center space-y-8">
-            
-            {/* Logo */}
-            <div className="flex justify-center">
-              <img 
-                src="/nemo-g.png" 
-                alt="nimo3 Logo" 
-                className="w-20 h-20 rounded-xl shadow-2xl"
-              />
-            </div>
-
-            {/* Sign In Form */}
-            <Card className="w-full max-w-sm bg-zinc-900/80 backdrop-blur-sm border-zinc-800/50 shadow-2xl">
-              <CardContent className="p-6">
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <div className="space-y-3">
-                    <Label htmlFor="email" className="text-white text-sm font-medium">Email Address</Label>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-zinc-400" />
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="Enter your email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="pl-10 bg-zinc-800/50 border-zinc-700/50 text-white placeholder:text-zinc-500 h-11 focus:ring-2 focus:ring-yellow-400/20 focus:border-yellow-400/50 transition-all duration-200"
-                        required
-                      />
-                    </div>
+          {/* Sign In Form */}
+          <Card className="w-full bg-zinc-900/80 backdrop-blur-sm border-zinc-800/50 shadow-2xl">
+            <CardContent className="p-6">
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="space-y-3">
+                  <Label htmlFor="email" className="text-white text-sm font-medium">Email Address</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-zinc-400" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="pl-10 bg-zinc-800/50 border-zinc-700/50 text-white placeholder:text-zinc-500 h-11 focus:ring-2 focus:ring-yellow-400/20 focus:border-yellow-400/50 transition-all duration-200"
+                      required
+                    />
                   </div>
-                  <div className="space-y-3">
-                    <Label htmlFor="password" className="text-white text-sm font-medium">Password</Label>
-                    <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-zinc-400" />
-                      <Input
-                        id="password"
-                        type="password"
-                        placeholder="Enter your password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="pl-10 bg-zinc-800/50 border-zinc-700/50 text-white placeholder:text-zinc-500 h-11 focus:ring-2 focus:ring-yellow-400/20 focus:border-yellow-400/50 transition-all duration-200"
-                        required
-                      />
-                    </div>
+                </div>
+                <div className="space-y-3">
+                  <Label htmlFor="password" className="text-white text-sm font-medium">Password</Label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-zinc-400" />
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="Enter your password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="pl-10 bg-zinc-800/50 border-zinc-700/50 text-white placeholder:text-zinc-500 h-11 focus:ring-2 focus:ring-yellow-400/20 focus:border-yellow-400/50 transition-all duration-200"
+                      required
+                    />
                   </div>
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black hover:from-yellow-500 hover:to-yellow-600 h-11 font-medium transition-all duration-200 shadow-lg hover:shadow-xl"
-                    disabled={loading}
-                  >
-                    {loading ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Please wait...
-                      </>
-                    ) : (
-                      'Continue'
-                    )}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
+                </div>
+                <Button 
+                  type="submit" 
+                  className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black hover:from-yellow-500 hover:to-yellow-600 h-11 font-medium transition-all duration-200 shadow-lg hover:shadow-xl"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Please wait...
+                    </>
+                  ) : (
+                    'Continue'
+                  )}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
 
-            {/* Additional Info */}
-            <div className="text-center">
-              <p className="text-zinc-500 text-xs">
-                By continuing, you agree to our terms of service and privacy policy
-              </p>
-            </div>
+          {/* Additional Info */}
+          <div className="text-center">
+            <p className="text-zinc-500 text-xs">
+              By continuing, you agree to our terms of service and privacy policy
+            </p>
           </div>
         </div>
       </div>
