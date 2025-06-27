@@ -172,7 +172,7 @@ export default function Dashboard({ user }: DashboardProps) {
               </div>
               <div className="flex items-center justify-between p-3 bg-zinc-800/30 rounded-lg">
                 <div className="flex items-center space-x-2">
-                  <FileAudio className="w-4 h-4 text-green-400" />
+                  <FileAudio className="w-4 h-4 text-yellow-400" />
                   <span className="text-zinc-300 text-sm">Audio Files</span>
                 </div>
                 <span className="text-white font-medium">0</span>
