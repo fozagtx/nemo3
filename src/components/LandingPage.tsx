@@ -82,7 +82,6 @@ export default function LandingPage() {
             className="underline hover:text-zinc-300 transition-colors flex items-center gap-1"
           >
             <X className="w-4 h-4" />
-            X
           </a>
         </motion.div>
       </div>
