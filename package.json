@@ -5,9 +5,20 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:bun": "bun run --bun vite",
     "build": "tsc -b && vite build",
+    "build:bun": "bun run --bun tsc -b && bun run --bun vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "lint:bun": "bun run --bun eslint .",
+    "preview": "vite preview",
+    "preview:bun": "bun run --bun vite preview",
+    "type-check": "tsc --noEmit",
+    "type-check:bun": "bun run --bun tsc --noEmit",
+    "test": "echo \"No tests specified\" && exit 0",
+    "test:bun": "bun test",
+    "install:bun": "bun install",
+    "clean": "rm -rf dist node_modules",
+    "clean:bun": "bun run --bun rm -rf dist node_modules"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
