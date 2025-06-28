@@ -157,7 +157,7 @@ export default function Dashboard({ user }: DashboardProps) {
       <div className="flex-1 p-8">
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-white mb-2">Create Podcast</h1>
+            <h1 className="text-3xl font-bold text-white mb-2">Create an audio</h1>
           </div>
 
           <Card className="bg-gradient-to-br from-zinc-900 to-zinc-950 border-zinc-800 shadow-2xl">
@@ -218,10 +218,10 @@ export default function Dashboard({ user }: DashboardProps) {
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <Headphones className="w-5 h-5 mr-2" />
-                  Your Podcast is Ready!
+                  Your audio is Ready!
                 </CardTitle>
                 <CardDescription className="text-zinc-400">
-                  Your blog post has been converted to an audio podcast using ElevenLabs AI
+                  Your blog post has been converted successfully
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -232,7 +232,7 @@ export default function Dashboard({ user }: DashboardProps) {
                         <Headphones className="w-6 h-6 text-black" />
                       </div>
                       <div>
-                        <div className="text-white font-medium">Generated Podcast</div>
+                        <div className="text-white font-medium">Finished audio</div>
                         <div className="text-zinc-400 text-sm">Ready for playback and download</div>
                       </div>
                     </div>
