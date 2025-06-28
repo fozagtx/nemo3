@@ -31,11 +31,11 @@ export default function LandingPage() {
               <div className="relative -rotate-[2.76deg] max-w-[250px] md:max-w-[454px] mt-2">
                 <img src="/frame.svg" height={79} width={459} alt="frame" className="w-full h-auto" />
                 <span className="absolute inset-0 flex items-center justify-center text-white font-bold">
-                  Audio
+                   ready Audio
                 </span>
               </div>
             </div>
-            <h1 className="text-white mt-2">in Seconds</h1>
+
           </motion.div>
 
           <motion.p

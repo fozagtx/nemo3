@@ -9,13 +9,11 @@ import { Toaster } from './components/ui/sonner';
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
-      setLoading(false);
     });
 
     // Listen for auth changes
@@ -25,14 +23,6 @@ function App() {
 
     return () => subscription.unsubscribe();
   }, []);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-        <div className="text-white">Loading...</div>
-      </div>
-    );
-  }
 
   return (
     <>
