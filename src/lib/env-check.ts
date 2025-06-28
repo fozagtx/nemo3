@@ -13,8 +13,8 @@ export function checkEnvironment() {
     const length = value ? `(${value.length} chars)` : '(missing)';
     console.log(`${status} ${key}: ${length}`);
     
-    if (key === 'VITE_ELEVENLABS_API_KEY' && value && !value.startsWith('sk-')) {
-      console.warn(`⚠️  ${key} should start with "sk-"`);
+    if (key === 'VITE_ELEVENLABS_API_KEY' && value && !value.startsWith('sk_')) {
+      console.warn(`⚠️  ${key} should start with "sk_"`);
     }
   });
   
@@ -23,7 +23,7 @@ export function checkEnvironment() {
   return requiredVars;
 }
 
-// Call this in development mode
-if (import.meta.env.DEV) {
-  checkEnvironment();
-}
+// Temporarily disabled to stop constant reloading
+// if (import.meta.env.DEV) {
+//   checkEnvironment();
+// }

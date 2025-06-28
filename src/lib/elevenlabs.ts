@@ -47,8 +47,8 @@ export function validateApiKey(apiKey: string): boolean {
     throw new Error('API key is required');
   }
   
-  if (!apiKey.startsWith('sk-')) {
-    throw new Error('Invalid API key format. Key should start with "sk-"');
+  if (!apiKey.startsWith('sk_')) {
+    throw new Error('Invalid API key format. Key should start with "sk_"');
   }
   
   return true;
