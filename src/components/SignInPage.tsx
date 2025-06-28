@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from './ui/card';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
-import { Card, CardContent } from './ui/card';
-import { ArrowLeft, Mail, Lock, Loader2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { toast } from 'sonner';
 
@@ -54,93 +60,66 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 relative overflow-hidden">
+    <div className="min-h-screen bg-[url('/noice.png')] bg-cover bg-center relative overflow-hidden flex flex-col items-center justify-center">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
-      
-      {/* Navigation */}
-      <nav className="relative z-10 flex items-start p-6">
-        <Button 
-          variant="ghost" 
-          className="text-white hover:bg-zinc-800"
-          onClick={() => navigate('/')}
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back
-        </Button>
-      </nav>
-
-      {/* Main Content */}
-      <div className="relative z-10 flex items-center justify-center min-h-[calc(100vh-120px)] px-6">
-        <div className="flex flex-col items-center space-y-8 max-w-sm w-full">
-          
-          {/* Logo */}
-          <div className="flex justify-center">
-            <img 
-              src="/nemo-g.png" 
-              alt="nimo3 Logo" 
-              className="w-20 h-20 rounded-xl shadow-2xl"
-            />
-          </div>
-
-          {/* Sign In Form */}
-          <Card className="w-full bg-zinc-900/80 backdrop-blur-sm border-zinc-800/50 shadow-2xl">
-            <CardContent className="p-6">
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="space-y-3">
-                  <Label htmlFor="email" className="text-white text-sm font-medium">Email Address</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-zinc-400" />
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="Enter your email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="pl-10 bg-zinc-800/50 border-zinc-700/50 text-white placeholder:text-zinc-500 h-11 focus:ring-2 focus:ring-yellow-400/20 focus:border-yellow-400/50 transition-all duration-200"
-                      required
-                    />
-                  </div>
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30 pointer-events-none"></div>
+      <div className="relative z-10 flex flex-col items-center w-full max-w-sm">
+        <Card className="w-full max-w-sm bg-zinc-900/80 backdrop-blur-sm border-zinc-800/50 shadow-2xl">
+          <CardHeader>
+          <div className="relative z-10 flex flex-col items-center w-full max-w-sm">
+        {/* Logo */}
+        <div className="flex justify-center mb-5 mt-8">
+          <img 
+            src="/nemo-g.png" 
+            alt="nimo3 Logo" 
+            className="w-20 h-20 rounded-xl shadow-2xl"
+          />
+        </div>
+        </div>
+            <CardTitle className="text-white flex justify-center items-center text-2xl">Join nimo3</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="m@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="bg-zinc-800/50 border-zinc-700/50 text-white placeholder:text-zinc-500 h-11"
+                />
+              </div>
+              <div className="grid gap-2">
+                <div className="flex items-center">
+                  <Label htmlFor="password">Password</Label>
                 </div>
-                <div className="space-y-3">
-                  <Label htmlFor="password" className="text-white text-sm font-medium">Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-zinc-400" />
-                    <Input
-                      id="password"
-                      type="password"
-                      placeholder="Enter your password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="pl-10 bg-zinc-800/50 border-zinc-700/50 text-white placeholder:text-zinc-500 h-11 focus:ring-2 focus:ring-yellow-400/20 focus:border-yellow-400/50 transition-all duration-200"
-                      required
-                    />
-                  </div>
-                </div>
-                <Button 
-                  type="submit" 
-                  className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black hover:from-yellow-500 hover:to-yellow-600 h-11 font-medium transition-all duration-200 shadow-lg hover:shadow-xl"
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Please wait...
-                    </>
-                  ) : (
-                    'Continue'
-                  )}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-
-          {/* Additional Info */}
-          <div className="text-center">
-            <p className="text-zinc-500 text-xs">
-              By continuing, you agree to our terms of service and privacy policy
-            </p>
-          </div>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="bg-zinc-800/50 border-zinc-700/50 text-white placeholder:text-zinc-500 h-11"
+                />
+              </div>
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? 'Please wait...' : 'Login'}
+              </Button>
+            </form>
+          </CardContent>
+          <CardFooter className="flex-col gap-2">
+            {/* <Button variant="outline" className="w-full" type="button" disabled>
+              Login with Google
+            </Button> */}
+          </CardFooter>
+        </Card>
+        <div className="text-center mt-4">
+          <p className="text-zinc-500 text-xs">
+            By continuing, you agree to our terms of service and privacy policy
+          </p>
         </div>
       </div>
     </div>
