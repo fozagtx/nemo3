@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { User } from '@supabase/supabase-js';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
@@ -8,7 +8,7 @@ import { Badge } from './ui/badge';
 import { Headphones, Download, Loader2, LogOut, User as UserIcon, Play, Pause, Mic, FileAudio, Zap } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { toast } from 'sonner';
-import { EnvDebug } from './EnvDebug';
+import { textToSpeech, createAudioUrl, downloadAudio as downloadAudioUtil, revokeAudioUrl } from '../lib/elevenlabs';
 
 interface DashboardProps {
   user: User;
@@ -29,26 +29,9 @@ export default function Dashboard({ user }: DashboardProps) {
     toast.success('Signed out successfully');
   };
 
-  const validateContent = (content: string): boolean => {
-    const length = content.trim().length;
-    if (length < 300) {
-      toast.error('Content must be at least 300 characters long');
-      return false;
-    }
-    if (length > 1200) {
-      toast.error('Content must not exceed 1200 characters');
-      return false;
-    }
-    return true;
-  };
-
   const convertToAudio = async () => {
     if (!blogContent.trim()) {
       toast.error('Please enter some content to convert');
-      return;
-    }
-
-    if (!validateContent(blogContent)) {
       return;
     }
 
@@ -58,73 +41,18 @@ export default function Dashboard({ user }: DashboardProps) {
       return;
     }
 
-    if (!apiKey.startsWith('sk-')) {
-      toast.error('Invalid ElevenLabs API key format. Key should start with "sk-"');
-      console.error('Invalid API key format:', apiKey.substring(0, 5) + '...');
-      return;
-    }
-
     setIsConverting(true);
     setAudioUrl(null);
 
     try {
-      // Create a conversational dialog from the blog content
-      const dialogContent = `Here's an interesting article I'd like to share with you. ${blogContent}`;
-
-      const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/XrExE9yKIg1WjnnlVkGX', {
-        method: 'POST',
-        headers: {
-          'Accept': 'audio/mpeg',
-          'Content-Type': 'application/json',
-          'xi-api-key': apiKey,
-        },
-        body: JSON.stringify({
-          text: dialogContent,
-          model_id: 'eleven_turbo_v2_5',
-          voice_settings: {
-            stability: 0.6,
-            similarity_boost: 0.9,
-            style: 0.0,
-            use_speaker_boost: true
-          }
-        }),
-      });
-
-      if (!response.ok) {
-        let errorMessage = `API Error: ${response.status}`;
-        
-        try {
-          const errorData = await response.json();
-          errorMessage = errorData.detail?.message || errorData.message || errorMessage;
-        } catch (e) {
-          // If we can't parse the error response, use the status
-        }
-        
-        console.error('ElevenLabs API Error:', {
-          status: response.status,
-          statusText: response.statusText,
-          errorMessage
-        });
-        
-        throw new Error(errorMessage);
-      }
-
-      const audioBlob = await response.blob();
-      const audioUrl = URL.createObjectURL(audioBlob);
-      setAudioUrl(audioUrl);
+      // Use the ElevenLabs utility function
+      const audioBlob = await textToSpeech(blogContent, { apiKey });
+      const newAudioUrl = createAudioUrl(audioBlob);
+      setAudioUrl(newAudioUrl);
       toast.success('Blog post converted to podcast successfully!');
     } catch (error: any) {
       console.error('Conversion error:', error);
-      
-      if (error.message.includes('401') || error.message.includes('Unauthorized')) {
-        toast.error('Invalid API key. Please contact administrator.');
-      } else if (error.message.includes('quota') || error.message.includes('limit')) {
-        toast.error('API quota exceeded. Please check your ElevenLabs account.');
-      } else if (error.message.includes('network') || error.message.includes('fetch')) {
-        toast.error('Network error. Please check your internet connection.');
-      } else {
-        toast.error(`Failed to convert: ${error.message}`);
-      }
+      toast.error(error.message || 'Failed to convert blog post to audio');
     } finally {
       setIsConverting(false);
     }
@@ -142,17 +70,24 @@ export default function Dashboard({ user }: DashboardProps) {
     }
   };
 
-  const downloadAudio = () => {
+  const handleDownloadAudio = () => {
     if (audioUrl) {
-      const link = document.createElement('a');
-      link.href = audioUrl;
-      link.download = 'podcast-episode.mp3';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      downloadAudioUtil(audioUrl);
       toast.success('Audio download started!');
     }
   };
+
+  // Cleanup audio URL when component unmounts or audioUrl changes
+  const cleanupAudioUrl = () => {
+    if (audioUrl) {
+      revokeAudioUrl(audioUrl);
+    }
+  };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return cleanupAudioUrl;
+  }, [audioUrl]);
 
   const characterCount = blogContent.length;
   const isValidLength = characterCount >= 300 && characterCount <= 1200;
@@ -324,7 +259,7 @@ export default function Dashboard({ user }: DashboardProps) {
                         )}
                       </Button>
                       <Button 
-                        onClick={downloadAudio}
+                        onClick={handleDownloadAudio}
                         size="sm"
                         className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black hover:from-yellow-500 hover:to-yellow-600 transition-all duration-200 shadow-lg"
                       >
