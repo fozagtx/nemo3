@@ -1,10 +1,9 @@
 import * as pdfjsLib from 'pdfjs-dist';
 import mammoth from 'mammoth';
 import { parseString } from 'xml2js';
-import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.js?url';
 
-// Set up PDF.js worker using Vite's URL import
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+// Set up PDF.js worker using Vite's URL constructor
+pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.min.js', import.meta.url).href;
 
 export interface FileProcessingResult {
   text: string;
