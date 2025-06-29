@@ -5,9 +5,10 @@ import { Textarea } from './ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Separator } from './ui/separator';
 import { Badge } from './ui/badge';
-import { Headphones, Download, Loader2, LogOut, User as UserIcon, Play, Pause, Mic, FileAudio, Zap } from 'lucide-react';
+import { Headphones, Download, Loader2, LogOut, User as UserIcon, Play, Pause, Mic, FileAudio, Zap, FileText } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { toast } from 'sonner';
+import FileUpload from './FileUpload';
 
 interface DashboardProps {
   user: User;
@@ -18,6 +19,7 @@ export default function Dashboard({ user }: DashboardProps) {
   const [isConverting, setIsConverting] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentFileName, setCurrentFileName] = useState<string>('');
   const audioRef = useRef<HTMLAudioElement>(null);
 
   // Get API key from environment variables
@@ -26,6 +28,12 @@ export default function Dashboard({ user }: DashboardProps) {
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     toast.success('Signed out successfully');
+  };
+
+  const handleTextExtracted = (text: string, fileName: string) => {
+    setBlogContent(text);
+    setCurrentFileName(fileName);
+    toast.success(`Text extracted from ${fileName}`);
   };
 
   const validateContent = (content: string): boolean => {
@@ -221,19 +229,36 @@ export default function Dashboard({ user }: DashboardProps) {
       <div className="flex-1 p-8">
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-white mb-2">Create Podcast</h1>
+            <h1 className="text-3xl font-bold text-white mb-2">Create Audio Content</h1>
+            <p className="text-zinc-400 mb-8">Upload documents or paste content to convert to audio</p>
           </div>
+
+          <FileUpload 
+            onTextExtracted={handleTextExtracted}
+            disabled={isConverting}
+          />
 
           <Card className="bg-gradient-to-br from-zinc-900 to-zinc-950 border-zinc-800 shadow-2xl">
             <CardHeader>
               <CardTitle className="text-white flex items-center">
-                <Zap className="w-5 h-5 mr-2 text-yellow-400" />
-                Blog Post Content
+                <FileText className="w-5 h-5 mr-2 text-yellow-400" />
+                Content to Convert
+                {currentFileName && (
+                  <Badge variant="secondary" className="ml-2 bg-zinc-700 text-zinc-300">
+                    From: {currentFileName}
+                  </Badge>
+                )}
               </CardTitle>
+              <CardDescription className="text-zinc-400">
+                {currentFileName 
+                  ? 'Content extracted from uploaded file. You can edit it before converting.'
+                  : 'Paste your content here or upload a file above.'
+                }
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <Textarea
-                placeholder="Paste your blog post content here..."
+                placeholder="Paste your content here or upload a file above..."
                 value={blogContent}
                 onChange={(e) => setBlogContent(e.target.value)}
                 className="min-h-[300px] bg-zinc-800/50 border-zinc-700 text-white placeholder:text-zinc-500 resize-none focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200"
@@ -270,7 +295,7 @@ export default function Dashboard({ user }: DashboardProps) {
                       Generating Dialog...
                     </>
                   ) : (
-                    'Convert to Podcast'
+                    'Convert to Audio'
                   )}
                 </Button>
               </div>
@@ -282,10 +307,10 @@ export default function Dashboard({ user }: DashboardProps) {
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <Headphones className="w-5 h-5 mr-2" />
-                  Your Podcast is Ready!
+                  Your Audio is Ready!
                 </CardTitle>
                 <CardDescription className="text-zinc-400">
-                  Your blog post has been converted to an audio podcast using ElevenLabs AI
+                  Your content has been converted to audio using ElevenLabs AI
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -296,7 +321,7 @@ export default function Dashboard({ user }: DashboardProps) {
                         <Headphones className="w-6 h-6 text-black" />
                       </div>
                       <div>
-                        <div className="text-white font-medium">Generated Podcast</div>
+                        <div className="text-white font-medium">Generated Audio</div>
                         <div className="text-zinc-400 text-sm">Ready for playback and download</div>
                       </div>
                     </div>
