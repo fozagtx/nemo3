@@ -5,10 +5,9 @@ import { Textarea } from './ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Separator } from './ui/separator';
 import { Badge } from './ui/badge';
-import { Headphones, Download, Loader2, LogOut, User as UserIcon, Play, Pause, Mic, FileAudio, Zap, FileText } from 'lucide-react';
+import { Headphones, Download, Loader2, LogOut, User as UserIcon, Play, Pause, Mic, FileAudio, FileText } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { toast } from 'sonner';
-import FileUpload from './FileUpload';
 
 interface DashboardProps {
   user: User;
@@ -19,7 +18,6 @@ export default function Dashboard({ user }: DashboardProps) {
   const [isConverting, setIsConverting] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentFileName, setCurrentFileName] = useState<string>('');
   const audioRef = useRef<HTMLAudioElement>(null);
 
   // Get API key from environment variables
@@ -30,20 +28,16 @@ export default function Dashboard({ user }: DashboardProps) {
     toast.success('Signed out successfully');
   };
 
-  const handleTextExtracted = (text: string, fileName: string) => {
-    setBlogContent(text);
-    setCurrentFileName(fileName);
-    toast.success(`Text extracted from ${fileName}`);
-  };
-
   const validateContent = (content: string): boolean => {
     const length = content.trim().length;
-    if (length < 300) {
-      toast.error('Content must be at least 300 characters long');
+    if (length < 100) {
+      toast.error('Content must be at least 100 characters long');
       return false;
     }
-    if (length > 1200) {
-      toast.error('Content must not exceed 1200 characters');
+    
+    const wordCount = content.trim().split(/\s+/).filter(word => word.length > 0).length;
+    if (wordCount > 3000) {
+      toast.error('Content must not exceed 3000 words');
       return false;
     }
     return true;
@@ -162,7 +156,8 @@ export default function Dashboard({ user }: DashboardProps) {
   };
 
   const characterCount = blogContent.length;
-  const isValidLength = characterCount >= 300 && characterCount <= 1200;
+  const wordCount = blogContent.trim().split(/\s+/).filter(word => word.length > 0).length;
+  const isValidLength = characterCount >= 100 && wordCount <= 3000;
 
   return (
     <div className="min-h-screen bg-zinc-950 flex">
@@ -230,52 +225,45 @@ export default function Dashboard({ user }: DashboardProps) {
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="text-center">
             <h1 className="text-3xl font-bold text-white mb-2">Create Audio Content</h1>
-            <p className="text-zinc-400 mb-8">Upload documents or paste content to convert to audio</p>
+            <p className="text-zinc-400 mb-8">Paste your content to convert to high-quality audio</p>
           </div>
-
-          <FileUpload 
-            onTextExtracted={handleTextExtracted}
-            disabled={isConverting}
-          />
 
           <Card className="bg-gradient-to-br from-zinc-900 to-zinc-950 border-zinc-800 shadow-2xl">
             <CardHeader>
               <CardTitle className="text-white flex items-center">
                 <FileText className="w-5 h-5 mr-2 text-yellow-400" />
                 Content to Convert
-                {currentFileName && (
-                  <Badge variant="secondary" className="ml-2 bg-zinc-700 text-zinc-300">
-                    From: {currentFileName}
-                  </Badge>
-                )}
               </CardTitle>
               <CardDescription className="text-zinc-400">
-                {currentFileName 
-                  ? 'Content extracted from uploaded file. You can edit it before converting.'
-                  : 'Paste your content here or upload a file above.'
-                }
+                Paste your text content here. Maximum 3000 words, minimum 100 characters.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <Textarea
-                placeholder="Paste your content here or upload a file above..."
+                placeholder="Paste your content here..."
                 value={blogContent}
                 onChange={(e) => setBlogContent(e.target.value)}
                 className="min-h-[300px] bg-zinc-800/50 border-zinc-700 text-white placeholder:text-zinc-500 resize-none focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200"
               />
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
-                  <div className={`text-sm ${isValidLength ? 'text-green-400' : characterCount > 1200 ? 'text-red-400' : 'text-yellow-400'}`}> 
-                    {characterCount}/1200 characters
+                  <div className="flex items-center space-x-2">
+                    <div className={`text-sm ${isValidLength ? 'text-green-400' : characterCount > 100 ? 'text-yellow-400' : 'text-red-400'}`}> 
+                      {characterCount} characters
+                    </div>
+                    <span className="text-zinc-500">•</span>
+                    <div className={`text-sm ${wordCount <= 3000 ? 'text-green-400' : 'text-red-400'}`}>
+                      {wordCount}/3000 words
+                    </div>
                   </div>
-                  {characterCount < 300 && characterCount > 0 && (
+                  {characterCount < 100 && characterCount > 0 && (
                     <Badge variant="destructive" className="bg-red-900 text-red-300">
-                      Need {300 - characterCount} more characters
+                      Need {100 - characterCount} more characters
                     </Badge>
                   )}
-                  {characterCount > 1200 && (
+                  {wordCount > 3000 && (
                     <Badge variant="destructive" className="bg-red-900 text-red-300">
-                      {characterCount - 1200} characters over limit
+                      {wordCount - 3000} words over limit
                     </Badge>
                   )}
                   {isValidLength && (
