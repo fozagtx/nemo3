@@ -1,10 +1,10 @@
-# nimo3
+# nemo3
 
-Transform your blog posts into engaging audio content in seconds using ElevenLabs AI.
+Transform your text content into engaging audio in seconds using ElevenLabs AI.
 
 ## Features
 
-- 🚀 Lightning-fast blog-to-audio conversion
+- 🚀 Lightning-fast text-to-audio conversion
 - 🎙️ Studio-quality voice synthesis
 - 📱 Responsive design for all devices
 - 🔐 Secure user authentication

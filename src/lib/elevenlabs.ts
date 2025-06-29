@@ -64,12 +64,13 @@ export function validateTextContent(text: string): boolean {
     throw new Error('Text content is required');
   }
   
-  if (trimmedText.length < 300) {
-    throw new Error('Content must be at least 300 characters long');
+  if (trimmedText.length < 100) {
+    throw new Error('Content must be at least 100 characters long');
   }
   
-  if (trimmedText.length > 1200) {
-    throw new Error('Content must not exceed 1200 characters');
+  const wordCount = trimmedText.split(/\s+/).filter(word => word.length > 0).length;
+  if (wordCount > 3000) {
+    throw new Error('Content must not exceed 3000 words');
   }
   
   return true;
@@ -91,7 +92,7 @@ export async function textToSpeech(
   validateTextContent(text);
   
   // Create conversational dialog from the content
-  const dialogContent = `Here's an interesting article I'd like to share with you. ${text}`;
+  const dialogContent = `Here's some interesting content I'd like to share with you. ${text}`;
   
   // Prepare request body
   const requestBody = {

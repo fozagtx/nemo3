@@ -15,7 +15,7 @@ export function Header() {
           <div className="flex items-center space-x-2">
             <img 
               src="/nemo-g.png" 
-              alt="nimo3 Logo" 
+              alt="nemo3 Logo" 
               className="w-8 h-8 rounded-sm"
             />
             <span className="text-xl font-medium hidden md:block text-white">nemo3</span>

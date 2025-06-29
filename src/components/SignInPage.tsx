@@ -73,13 +73,13 @@ export default function SignInPage() {
       <div className="flex justify-center mb-4">
         <img 
           src="/nemo-g.png" 
-          alt="nimo3 Logo" 
+          alt="nemo3 Logo" 
           className="w-20 h-20 rounded-xl shadow-2xl"
         />
       </div>
       <Card className="w-full max-w-sm bg-zinc-900/80 backdrop-blur-sm border-zinc-800/50 shadow-2xl">
         <CardHeader>
-          <CardTitle className="text-white flex justify-center items-center text-2xl">Join nimo3</CardTitle>
+          <CardTitle className="text-white flex justify-center items-center text-2xl">Join nemo3</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
