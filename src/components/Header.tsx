@@ -18,7 +18,7 @@ export function Header() {
               alt="nimo3 Logo" 
               className="w-8 h-8 rounded-sm"
             />
-            <span className="text-xl font-medium hidden md:block text-white">nimo3</span>
+            <span className="text-xl font-medium hidden md:block text-white">nemo3</span>
           </div>
         </div>
         
