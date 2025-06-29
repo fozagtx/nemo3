@@ -29,7 +29,10 @@ export default function LandingPage() {
             <img 
               src="/bolt.new.png" 
               alt="Built with Bolt.new" 
-              className="h-8 md:h-10 opacity-80 hover:opacity-100 transition-opacity duration-200"
+              className="h-8 md:h-10 opacity-90 hover:opacity-100 transition-all duration-300 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:drop-shadow-[0_0_25px_rgba(255,255,255,0.5)] animate-pulse"
+              style={{
+                filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.2))'
+              }}
             />
           </motion.div>
 
