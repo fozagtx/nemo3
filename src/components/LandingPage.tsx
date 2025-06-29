@@ -26,7 +26,7 @@ export default function LandingPage() {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="inline-block font-bold tracking-tighter text-4xl md:text-[4rem]"
           >
-            <h1 className="text-white">Blog Content to</h1>
+            <h1 className="text-white">Slides to</h1>
             <div className="flex justify-center gap-4 leading-[4rem] mt-0 md:mt-2">
               <div className="relative -rotate-[2.76deg] max-w-[250px] md:max-w-[454px] mt-2">
                 <img src="/frame.svg" height={79} width={459} alt="frame" className="w-full h-auto" />
