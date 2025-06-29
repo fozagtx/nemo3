@@ -24,12 +24,13 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.8 }}
-            className="flex justify-center mb-6"
+            className="flex justify-center items-center gap-3 mb-6"
           >
+            <span className="text-zinc-400 text-sm font-medium">Built with</span>
             <img 
               src="/bolt.new.png" 
               alt="Built with Bolt.new" 
-              className="h-8 md:h-10 opacity-90 hover:opacity-100 transition-all duration-300 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:drop-shadow-[0_0_25px_rgba(255,255,255,0.5)] animate-pulse"
+              className="h-10 md:h-12 opacity-90 hover:opacity-100 transition-all duration-300 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:drop-shadow-[0_0_25px_rgba(255,255,255,0.5)] animate-pulse"
               style={{
                 filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.2))'
               }}
