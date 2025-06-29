@@ -21,6 +21,19 @@ export default function LandingPage() {
           className="max-w-3xl mx-auto w-full flex-1 flex flex-col justify-center mt-4"
         >
           <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.8 }}
+            className="flex justify-center mb-6"
+          >
+            <img 
+              src="/bolt.new.png" 
+              alt="Built with Bolt.new" 
+              className="h-8 md:h-10 opacity-80 hover:opacity-100 transition-opacity duration-200"
+            />
+          </motion.div>
+
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
@@ -68,37 +81,24 @@ export default function LandingPage() {
             <span>Currently in beta</span>
             <span>•</span>
             <span>Follow us on</span>
-          </div>
-          <button
-            onClick={() => {
-              console.log('X logo clicked!');
-              window.open('https://x.com/zanbuilds', '_blank', 'noopener,noreferrer');
-            }}
-            className="transition-all duration-200 hover:scale-110 cursor-pointer ml-1 inline-block bg-transparent border-none p-0"
-          >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="16" 
-              height="16" 
-              viewBox="0 0 50 50"
-              className="fill-current transition-all duration-200 hover:drop-shadow-sm"
+            <button
+              onClick={() => {
+                console.log('X logo clicked!');
+                window.open('https://x.com/zanbuilds', '_blank', 'noopener,noreferrer');
+              }}
+              className="transition-all duration-200 hover:scale-110 cursor-pointer inline-block bg-transparent border-none p-0"
             >
-              <path d="M 5.9199219 6 L 20.582031 27.375 L 6.2304688 44 L 9.4101562 44 L 21.986328 29.421875 L 31.986328 44 L 44 44 L 28.681641 21.669922 L 42.199219 6 L 39.029297 6 L 27.275391 19.617188 L 17.933594 6 L 5.9199219 6 z M 9.7167969 8 L 16.880859 8 L 40.203125 42 L 33.039062 42 L 9.7167969 8 z"></path>
-            </svg>
-          </button>
-          <span>•</span>
-          <a
-            href="https://bolt.new"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white/10 hover:bg-white/20 transition-colors duration-200 text-xs font-medium"
-          >
-            <span>Built with</span>
-            <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-            </svg>
-            <span>Bolt.new</span>
-          </a>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="16" 
+                height="16" 
+                viewBox="0 0 50 50"
+                className="fill-current transition-all duration-200 hover:drop-shadow-sm"
+              >
+                <path d="M 5.9199219 6 L 20.582031 27.375 L 6.2304688 44 L 9.4101562 44 L 21.986328 29.421875 L 31.986328 44 L 44 44 L 28.681641 21.669922 L 42.199219 6 L 39.029297 6 L 27.275391 19.617188 L 17.933594 6 L 5.9199219 6 z M 9.7167969 8 L 16.880859 8 L 40.203125 42 L 33.039062 42 L 9.7167969 8 z"></path>
+              </svg>
+            </button>
+          </div>
         </motion.div>
       </div>
     </div>
