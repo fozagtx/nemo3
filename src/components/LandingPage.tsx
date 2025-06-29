@@ -44,7 +44,7 @@ export default function LandingPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
           >
-            Copy paste blogs and process into ready audio and listen. 
+            Copy and paste slides and process them into ready audio, then listen. 
           </motion.p>
 
           <motion.div
