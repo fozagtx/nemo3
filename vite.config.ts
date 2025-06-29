@@ -11,5 +11,10 @@ export default defineConfig({
   },
   optimizeDeps: {
     exclude: ['lucide-react'],
+    include: ['pdfjs-dist'],
   },
+  worker: {
+    format: 'es'
+  },
+  assetsInclude: ['**/*.wasm']
 });
