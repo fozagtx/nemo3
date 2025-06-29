@@ -11,7 +11,6 @@ import {
   SidebarFooter,
 } from "./ui/sidebar";
 import { LogOut, Mic, FileAudio, Settings, LayoutDashboard } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 const navItems = [
   {
@@ -37,7 +36,6 @@ const navItems = [
 ];
 
 export function AppSidebar({ onSignOut }: { onSignOut?: () => void }) {
-  const navigate = useNavigate();
   return (
     <ShadSidebar className="bg-gradient-to-b from-zinc-900 to-zinc-950 border-r border-zinc-800 text-white min-h-screen">
       <SidebarHeader className="flex items-center space-x-3 p-6">
