@@ -43,7 +43,7 @@ export default function SignInPage() {
         }
 
         if (signUpData.user) {
-          toast.success('Account created successfully!');
+          toast.success('Account created successfully! Check your email for confirmation.');
         }
       } else if (signInError) {
         toast.error(signInError.message);
