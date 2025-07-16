@@ -70,7 +70,7 @@ export default function Dashboard({ user }: DashboardProps) {
 
     try {
       // Create a conversational dialog from the blog content
-      const dialogContent = `Here's an interesting article I'd like to share with you. ${blogContent}`;
+      const dialogContent = `${blogContent}`;
 
       const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/XrExE9yKIg1WjnnlVkGX', {
         method: 'POST',
