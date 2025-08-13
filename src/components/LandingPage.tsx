@@ -41,27 +41,26 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="inline-block font-bold tracking-tighter text-4xl md:text-[4rem]"
+            className="inline-block font-bold tracking-tighter text-4xl md:text-[3rem]"
           >
-            <h1 className="text-white">Text Content to</h1>
+            <h1 className="text-white">Create TikTok-Ready UGC Ads</h1>
             <div className="flex justify-center gap-4 leading-[4rem] mt-0 md:mt-2">
-              <div className="relative -rotate-[2.76deg] max-w-[250px] md:max-w-[454px] mt-2">
+              <div className="relative -rotate-[2.76deg] max-w-[350px] md:max-w-[454px] mt-2">
                 <img src="/frame.svg" height={79} width={459} alt="frame" className="w-full h-auto" />
-                <span className="absolute inset-0 flex items-center justify-center text-white font-bold">
-                   ready Audio
+                <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg md:text-2xl text-center px-2">
+                  AI-Generated Hooks & Voice-Overs
                 </span>
               </div>
             </div>
-
           </motion.div>
 
           <motion.p
-            className="mt-8 text-sm sm:text-base text-zinc-400 font-light tracking-wide max-w-2xl mx-auto"
+            className="mt-8 text-base md:text-lg text-zinc-300 font-light tracking-wide max-w-2xl mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
           >
-            Copy and paste your text content and process it into ready audio, then listen. 
+            Upload your image, let our AI generate viral TikTok hooks, and get a professional voice-over for your ad—all in one place. Perfect for UGC marketers and creators looking to stand out.
           </motion.p>
 
           <motion.div
@@ -70,6 +69,12 @@ export default function LandingPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
+            <a
+              href="/dashboard"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg text-lg transition-all duration-200"
+            >
+              Get Started
+            </a>
           </motion.div>
 
         </motion.div>
