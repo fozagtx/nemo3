@@ -16,7 +16,7 @@ import { UploadImageNode } from "./nodes/UploadImageNode";
 import { HookNode } from "./nodes/HookNode";
 import { VoiceOverNode } from "./nodes/VoiceOverNode";
 
-const MISTRAL_API_KEY = import.meta.env.VITE_MISTRAL_API_KEY as string | undefined;
+const MISTRAL_API_KEY = import.meta.env.MISTRAL_API_KEY as string | undefined;
 const ELEVEN_API_KEY = import.meta.env.VITE_ELEVENLABS_API_KEY as string | undefined;
 const ELEVEN_VOICE_ID = (import.meta.env.VITE_ELEVENLABS_VOICE_ID as string | undefined) ?? "21m00Tcm4TlvDq8ikWAM"; // Adam as sensible default
 
