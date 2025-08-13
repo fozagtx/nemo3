@@ -20,24 +20,7 @@ export default function LandingPage() {
           transition={{ duration: 1 }}
           className="max-w-3xl mx-auto w-full flex-1 flex flex-col justify-center mt-4"
         >
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.8 }}
-            className="flex justify-center items-center gap-3 mb-6"
-          >
-            <span className="text-zinc-400 text-sm font-medium">Built with</span>
-            <img 
-              src="/bolt.new.png" 
-              alt="Built with Bolt.new" 
-              className="h-10 md:h-12 opacity-90 hover:opacity-100 transition-all duration-300 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:drop-shadow-[0_0_25px_rgba(255,255,255,0.5)] animate-pulse"
-              style={{
-                filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.2))'
-              }}
-            />
-          </motion.div>
-
-          <motion.div
+        <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
@@ -62,20 +45,6 @@ export default function LandingPage() {
           >
             Upload your image, let our AI generate viral TikTok hooks, and get a professional voice-over for your ad—all in one place. Perfect for UGC marketers and creators looking to stand out.
           </motion.p>
-
-          <motion.div
-            className="mt-10 flex justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-          >
-            <a
-              href="/dashboard"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg text-lg transition-all duration-200"
-            >
-              Get Started
-            </a>
-          </motion.div>
 
         </motion.div>
 

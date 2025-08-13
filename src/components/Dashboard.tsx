@@ -1,22 +1,10 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState } from 'react';
 import { UserButton } from '@civic/auth/react';
 import { Button } from './ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Separator } from './ui/separator';
-import { Mic, FileAudio, Upload, MessageSquare, Volume2 } from 'lucide-react';
+import { Mic, FileAudio } from 'lucide-react';
 import { toast } from 'sonner';
-import ReactFlow, { 
-  Node, 
-  Edge, 
-  Controls, 
-  Background, 
-  useNodesState, 
-  useEdgesState,
-  addEdge,
-  Connection,
-  NodeTypes
-} from 'reactflow';
-import 'reactflow/dist/style.css';
 
 export default function Dashboard() {
   const [isConverting, setIsConverting] = useState(false);
@@ -31,7 +19,6 @@ export default function Dashboard() {
   const [selectedHook, setSelectedHook] = useState<string>('');
   const [finalHook, setFinalHook] = useState<string>('');
   const [renderedImageUrl, setRenderedImageUrl] = useState<string | null>(null);
-  const [isExporting, setIsExporting] = useState(false);
 
 
   const apiKey = import.meta.env.VITE_ELEVENLABS_API_KEY;
@@ -226,12 +213,12 @@ export default function Dashboard() {
       toast.error('Generate voiceover first');
       return;
     }
-    const link = document.createElement('a');
-    link.href = audioUrl;
+      const link = document.createElement('a');
+      link.href = audioUrl;
     link.download = 'tiktok-voiceover.mp3';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     toast.success('Audio downloaded');
   };
 
@@ -315,7 +302,7 @@ export default function Dashboard() {
                   {imagePreview && (
                     <div className="mt-4 flex justify-center">
                       <img src={imagePreview} alt="Preview" className="w-40 h-64 object-cover rounded-lg" />
-                    </div>
+                  </div>
                   )}
                 </div>
               )}
@@ -391,7 +378,7 @@ export default function Dashboard() {
                   {renderedImageUrl && (
                     <div className="mt-2 flex justify-center">
                       <img src={renderedImageUrl} alt="Rendered" className="w-40 rounded" />
-                    </div>
+                  </div>
                   )}
                 </div>
               )}
