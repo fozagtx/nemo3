@@ -33,20 +33,27 @@ export async function mistralHookIdeas(goal: string): Promise<string[]> {
 
 export async function fetchYouTubeTranscript(videoUrl: string): Promise<string> {
   if (!videoUrl) throw new Error("Please provide a YouTube video URL");
-  const res = await fetch(`/api/transcript?url=${encodeURIComponent(videoUrl)}`);
+  const res = await fetch(`/api/transcript?url=${encodeURIComponent(videoUrl)}`, {
+    headers: { Accept: "application/json" },
+  });
+  const raw = await res.text();
   if (!res.ok) {
-    const err = await safeJson(res);
+    const err = tryParseJson(raw);
     throw new Error(err?.error || `Transcript error ${res.status}`);
   }
-  const data = (await res.json()) as { text?: string };
-  const text = (data.text || "").trim();
+  const data = tryParseJson(raw) as { text?: string } | null;
+  if (!data || typeof data.text !== "string") {
+    const sample = raw.slice(0, 120).replace(/\s+/g, " ");
+    throw new Error(`Unexpected response from transcript API: ${sample}`);
+  }
+  const text = data.text.trim();
   if (!text) throw new Error("No transcript found for this video");
   return text;
 }
 
-async function safeJson(res: Response): Promise<any | null> {
+function tryParseJson(str: string): any | null {
   try {
-    return await res.json();
+    return JSON.parse(str);
   } catch {
     return null;
   }
