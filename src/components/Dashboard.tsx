@@ -14,17 +14,17 @@ import { UserButton } from "@civic/auth/react";
 import "reactflow/dist/style.css";
 import { HookNode } from "./nodes/HookNode";
 import { VoiceOverNode } from "./nodes/VoiceOverNode";
-import { TranscribeYouTubeNode } from "./nodes/TranscribeYouTubeNode";
+import { ScriptWriterNode } from "./nodes/ScriptWriterNode";
 
 const nodeTypes = {
-  transcribeYoutube: TranscribeYouTubeNode,
   generateHook: HookNode,
+  scriptWriter: ScriptWriterNode,
   voiceOver: VoiceOverNode,
 } satisfies Record<string, ComponentType<any>>;
 
 const initialNodes: Node[] = [
-  { id: "1", position: { x: 0, y: 40 }, data: {}, type: "transcribeYoutube" },
-  { id: "2", position: { x: 260, y: 40 }, data: {}, type: "generateHook" },
+  { id: "1", position: { x: 0, y: 40 }, data: {}, type: "generateHook" },
+  { id: "2", position: { x: 260, y: 40 }, data: {}, type: "scriptWriter" },
   { id: "3", position: { x: 520, y: 40 }, data: {}, type: "voiceOver" },
 ];
 

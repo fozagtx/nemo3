@@ -31,6 +31,29 @@ export async function mistralHookIdeas(goal: string): Promise<string[]> {
     .slice(0, 5);
 }
 
+export async function mistralScriptFromHook(hook: string): Promise<string> {
+  if (!MISTRAL_API_KEY) throw new Error("Missing VITE_MISTRAL_API_KEY");
+  const res = await fetch("https://api.mistral.ai/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${MISTRAL_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: "mistral-small-latest",
+      messages: [
+        { role: "system", content: "You write concise, high-retention 15-second UGC/TikTok scripts. Keep lines short, punchy, and speak directly to camera." },
+        { role: "user", content: `Write a 15-second engaging TikTok script based on this hook: "${hook}".\nConstraints: 70-90 words, direct and energetic tone, include a quick CTA. Return plain text only.` },
+      ],
+      temperature: 0.8,
+    }),
+  });
+  if (!res.ok) throw new Error(`Mistral error ${res.status}`);
+  const data = await res.json();
+  const text: string = data.choices?.[0]?.message?.content ?? "";
+  return text.trim();
+}
+
 export async function fetchYouTubeTranscript(videoUrl: string): Promise<string> {
   if (!videoUrl) throw new Error("Please provide a YouTube video URL");
   const res = await fetch(`/api/transcript?url=${encodeURIComponent(videoUrl)}`, {
