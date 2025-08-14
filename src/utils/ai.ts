@@ -1,4 +1,6 @@
-/* AI utilities: Mistral hooks and ElevenLabs TTS */
+
+import { YoutubeTranscript } from "youtube-transcript";
+export type TranscriptItem = { text: string; duration?: number; offset?: number };
 export const MISTRAL_API_KEY = import.meta.env.VITE_MISTRAL_API_KEY as string | undefined;
 export const ELEVEN_API_KEY = import.meta.env.VITE_ELEVENLABS_API_KEY as string | undefined;
 export const ELEVEN_VOICE_ID = (import.meta.env.VITE_ELEVENLABS_VOICE_ID as string | undefined) ?? "21m00Tcm4TlvDq8ikWAM";
@@ -28,6 +30,19 @@ export async function mistralHookIdeas(goal: string): Promise<string[]> {
     .map((l: string) => l.replace(/^\d+\.|^-\s*/, "").trim())
     .filter(Boolean)
     .slice(0, 5);
+}
+
+export async function fetchYouTubeTranscript(videoUrl: string): Promise<string> {
+  if (!videoUrl) throw new Error("Please provide a YouTube video URL");
+  try {
+    const items: TranscriptItem[] = await YoutubeTranscript.fetchTranscript(videoUrl);
+    const text = items.map((i: TranscriptItem) => i.text).join(" ");
+    if (!text) throw new Error("No transcript found for this video");
+    return text;
+  } catch (e: unknown) {
+    const msg = (e as Error).message || "Failed to fetch transcript";
+    throw new Error(msg.includes("captions") ? "Captions not available for this video" : msg);
+  }
 }
 
 export async function elevenLabsTTS(text: string): Promise<string> {
