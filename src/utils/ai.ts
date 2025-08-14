@@ -1,5 +1,4 @@
-
-import { YoutubeTranscript } from "youtube-transcript";
+/* AI utilities: Mistral hooks, ElevenLabs TTS, YouTube transcript */
 export type TranscriptItem = { text: string; duration?: number; offset?: number };
 export const MISTRAL_API_KEY = import.meta.env.VITE_MISTRAL_API_KEY as string | undefined;
 export const ELEVEN_API_KEY = import.meta.env.VITE_ELEVENLABS_API_KEY as string | undefined;
@@ -34,14 +33,22 @@ export async function mistralHookIdeas(goal: string): Promise<string[]> {
 
 export async function fetchYouTubeTranscript(videoUrl: string): Promise<string> {
   if (!videoUrl) throw new Error("Please provide a YouTube video URL");
+  const res = await fetch(`/api/transcript?url=${encodeURIComponent(videoUrl)}`);
+  if (!res.ok) {
+    const err = await safeJson(res);
+    throw new Error(err?.error || `Transcript error ${res.status}`);
+  }
+  const data = (await res.json()) as { text?: string };
+  const text = (data.text || "").trim();
+  if (!text) throw new Error("No transcript found for this video");
+  return text;
+}
+
+async function safeJson(res: Response): Promise<any | null> {
   try {
-    const items: TranscriptItem[] = await YoutubeTranscript.fetchTranscript(videoUrl);
-    const text = items.map((i: TranscriptItem) => i.text).join(" ");
-    if (!text) throw new Error("No transcript found for this video");
-    return text;
-  } catch (e: unknown) {
-    const msg = (e as Error).message || "Failed to fetch transcript";
-    throw new Error(msg.includes("captions") ? "Captions not available for this video" : msg);
+    return await res.json();
+  } catch {
+    return null;
   }
 }
 
