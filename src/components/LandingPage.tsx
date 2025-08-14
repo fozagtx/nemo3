@@ -43,7 +43,7 @@ export default function LandingPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
           >
-            Upload your image, let our AI generate viral TikTok hooks, and get a professional voice-over for your ad—all in one place. Perfect for UGC marketers and creators looking to stand out.
+         Ideate viral TikTok hooks, and get a professional voice-over for your ad all in one place. Perfect for UGC marketers and creators looking to stand out.
           </motion.p>
 
         </motion.div>
