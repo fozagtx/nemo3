@@ -14,7 +14,9 @@ export function ScriptWriterNode() {
     setError(null);
     setCopied(false);
     try {
-      const s = await mistralScriptFromHook(hook || "Stop scrolling. This one change 10x your results.");
+      const s = await mistralScriptFromHook(
+        hook || "Stop scrolling. This one change 10x your results.",
+      );
       setScript(s);
     } catch (e: unknown) {
       setError((e as Error).message);
@@ -28,14 +30,24 @@ export function ScriptWriterNode() {
       await navigator.clipboard.writeText(script);
       setCopied(true);
       setTimeout(() => setCopied(false), 1200);
-    } catch {}
+    } catch {
+      setCopied(false);
+    }
   };
 
   return (
     <div className="relative px-3 py-2 bg-zinc-900/95 border border-zinc-800 rounded-lg shadow text-white w-64 select-none">
-      <Handle type="target" position={Position.Left} className="!w-2 !h-2 !bg-yellow-400" />
-      <div className="text-sm font-semibold leading-none mb-1">15s Script Writer</div>
-      <div className="text-[11px] text-zinc-400 mb-2">Paste a hook, get a concise UGC script.</div>
+      <Handle
+        type="target"
+        position={Position.Left}
+        className="!w-2 !h-2 !bg-yellow-400"
+      />
+      <div className="text-sm font-semibold leading-none mb-1">
+        15s Script Writer
+      </div>
+      <div className="text-[11px] text-zinc-400 mb-2">
+        Paste a hook, get a concise UGC script.
+      </div>
       <textarea
         value={hook}
         onChange={(e) => setHook(e.target.value)}
@@ -66,7 +78,11 @@ export function ScriptWriterNode() {
           className="w-full h-28 text-[11px] bg-zinc-800 border border-zinc-700 rounded px-2 py-1 mt-2 outline-none resize-none"
         />
       )}
-      <Handle type="source" position={Position.Right} className="!w-2 !h-2 !bg-yellow-400" />
+      <Handle
+        type="source"
+        position={Position.Right}
+        className="!w-2 !h-2 !bg-yellow-400"
+      />
     </div>
   );
 }

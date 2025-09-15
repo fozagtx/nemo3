@@ -1,8 +1,18 @@
 /* AI utilities: Mistral hooks, ElevenLabs TTS, YouTube transcript */
-export type TranscriptItem = { text: string; duration?: number; offset?: number };
-export const MISTRAL_API_KEY = import.meta.env.VITE_MISTRAL_API_KEY as string | undefined;
-export const ELEVEN_API_KEY = import.meta.env.VITE_ELEVENLABS_API_KEY as string | undefined;
-export const ELEVEN_VOICE_ID = (import.meta.env.VITE_ELEVENLABS_VOICE_ID as string | undefined) ?? "21m00Tcm4TlvDq8ikWAM";
+export type TranscriptItem = {
+  text: string;
+  duration?: number;
+  offset?: number;
+};
+export const MISTRAL_API_KEY = import.meta.env.VITE_MISTRAL_API_KEY as
+  | string
+  | undefined;
+export const ELEVEN_API_KEY = import.meta.env.VITE_ELEVENLABS_API_KEY as
+  | string
+  | undefined;
+export const ELEVEN_VOICE_ID =
+  (import.meta.env.VITE_ELEVENLABS_VOICE_ID as string | undefined) ??
+  "21m00Tcm4TlvDq8ikWAM";
 
 export async function mistralHookIdeas(goal: string): Promise<string[]> {
   if (!MISTRAL_API_KEY) throw new Error("Missing VITE_MISTRAL_API_KEY");
@@ -15,8 +25,14 @@ export async function mistralHookIdeas(goal: string): Promise<string[]> {
     body: JSON.stringify({
       model: "mistral-small-latest",
       messages: [
-        { role: "system", content: "You generate short, catchy TikTok/UGC hook lines." },
-        { role: "user", content: `Give me 5 distinct short hook ideas for this goal: ${goal}. Return as numbered list.` },
+        {
+          role: "system",
+          content: "You generate short, catchy TikTok/UGC hook lines.",
+        },
+        {
+          role: "user",
+          content: `Give me 5 distinct short hook ideas for this goal: ${goal}. Return as numbered list.`,
+        },
       ],
       temperature: 0.8,
     }),
@@ -42,8 +58,15 @@ export async function mistralScriptFromHook(hook: string): Promise<string> {
     body: JSON.stringify({
       model: "mistral-small-latest",
       messages: [
-        { role: "system", content: "You write concise, high-retention 15-second UGC/TikTok scripts. Keep lines short, punchy, and speak directly to camera." },
-        { role: "user", content: `Write a 15-second engaging TikTok script based on this hook: "${hook}".\nConstraints: 70-90 words, direct and energetic tone, include a quick CTA. Return plain text only.` },
+        {
+          role: "system",
+          content:
+            "You write concise, high-retention 15-second UGC/TikTok scripts. Keep lines short, punchy, and speak directly to camera.",
+        },
+        {
+          role: "user",
+          content: `Write a 15-second engaging TikTok script based on this hook: "${hook}".\nConstraints: 70-90 words, direct and energetic tone, include a quick CTA. Return plain text only.`,
+        },
       ],
       temperature: 0.8,
     }),
@@ -54,11 +77,16 @@ export async function mistralScriptFromHook(hook: string): Promise<string> {
   return text.trim();
 }
 
-export async function fetchYouTubeTranscript(videoUrl: string): Promise<string> {
+export async function fetchYouTubeTranscript(
+  videoUrl: string,
+): Promise<string> {
   if (!videoUrl) throw new Error("Please provide a YouTube video URL");
-  const res = await fetch(`/api/transcript?url=${encodeURIComponent(videoUrl)}`, {
-    headers: { Accept: "application/json" },
-  });
+  const res = await fetch(
+    `/api/transcript?url=${encodeURIComponent(videoUrl)}`,
+    {
+      headers: { Accept: "application/json" },
+    },
+  );
   const raw = await res.text();
   if (!res.ok) {
     const err = tryParseJson(raw);
@@ -74,7 +102,7 @@ export async function fetchYouTubeTranscript(videoUrl: string): Promise<string> 
   return text;
 }
 
-function tryParseJson(str: string): any | null {
+function tryParseJson(str: string): unknown | null {
   try {
     return JSON.parse(str);
   } catch {
@@ -84,15 +112,22 @@ function tryParseJson(str: string): any | null {
 
 export async function elevenLabsTTS(text: string): Promise<string> {
   if (!ELEVEN_API_KEY) throw new Error("Missing VITE_ELEVENLABS_API_KEY");
-  const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${ELEVEN_VOICE_ID}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "audio/mpeg",
-      "xi-api-key": ELEVEN_API_KEY,
+  const res = await fetch(
+    `https://api.elevenlabs.io/v1/text-to-speech/${ELEVEN_VOICE_ID}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "audio/mpeg",
+        "xi-api-key": ELEVEN_API_KEY,
+      },
+      body: JSON.stringify({
+        text,
+        model_id: "eleven_monolingual_v1",
+        voice_settings: { stability: 0.4, similarity_boost: 0.7 },
+      }),
     },
-    body: JSON.stringify({ text, model_id: "eleven_monolingual_v1", voice_settings: { stability: 0.4, similarity_boost: 0.7 } }),
-  });
+  );
   if (!res.ok) throw new Error(`ElevenLabs error ${res.status}`);
   const buf = await res.arrayBuffer();
   const blob = new Blob([buf], { type: "audio/mpeg" });
