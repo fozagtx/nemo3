@@ -89,7 +89,7 @@ export async function fetchYouTubeTranscript(
   );
   const raw = await res.text();
   if (!res.ok) {
-    const err = tryParseJson(raw);
+    const err = tryParseJson(raw) as { error?: string } | null;
     throw new Error(err?.error || `Transcript error ${res.status}`);
   }
   const data = tryParseJson(raw) as { text?: string } | null;

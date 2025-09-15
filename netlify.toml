@@ -1,6 +1,6 @@
 [build]
   publish = "dist"
-  command = "bun run build"
+  command = "npm run build"
 
 [functions]
   directory = "netlify/functions"
@@ -19,4 +19,4 @@
 [build.environment]
   NODE_VERSION = "18"
 
-//netlify node_bundler
+# netlify node_bundler configuration
