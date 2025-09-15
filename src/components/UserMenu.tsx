@@ -22,6 +22,33 @@ export function UserMenu() {
 
   if (!user) return null;
 
+  // Extract user's name from email or use display name if available
+  const getUserDisplayName = () => {
+    // Check if user has a name property (with proper type checking)
+    const userWithName = user as any;
+    if (userWithName.name) return userWithName.name;
+    if (userWithName.displayName) return userWithName.displayName;
+    if (userWithName.firstName && userWithName.lastName)
+      return `${userWithName.firstName} ${userWithName.lastName}`;
+    if (userWithName.firstName) return userWithName.firstName;
+
+    // Fall back to extracting name from email
+    if (user.email) {
+      const emailPrefix = user.email.split("@")[0];
+      // Convert email prefix to readable name (remove dots, capitalize)
+      return emailPrefix
+        .split(/[._-]/)
+        .map(
+          (part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase(),
+        )
+        .join(" ");
+    }
+
+    return "User";
+  };
+
+  const displayName = getUserDisplayName();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -34,7 +61,7 @@ export function UserMenu() {
           </div>
           <div className="flex flex-col items-start text-sm">
             <span className="font-medium text-gray-900 truncate max-w-[120px]">
-              {user.email || "User"}
+              {displayName}
             </span>
           </div>
           <ChevronDown className="w-4 h-4 text-gray-500" />
@@ -43,7 +70,7 @@ export function UserMenu() {
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">Account</p>
+            <p className="text-sm font-medium leading-none">{displayName}</p>
             <p className="text-xs leading-none text-muted-foreground truncate">
               {user.email}
             </p>

@@ -19,11 +19,9 @@ import {
   Workflow,
   FolderOpen,
   Calendar,
-  Save,
   Plus,
   Mic,
 } from "lucide-react";
-import { Button } from "./ui/button";
 
 // Custom node component for the workflow steps
 interface WorkflowNodeData {
@@ -129,9 +127,9 @@ export default function Dashboard() {
   );
 
   return (
-    <div className="h-screen w-full bg-gradient-to-br from-pink-300 via-pink-400 to-orange-400 flex">
+    <div className="h-screen w-full bg-white flex">
       {/* Sidebar */}
-      <div className="w-64 bg-white/95 backdrop-blur-sm border-r border-white/20 flex flex-col">
+      <div className="w-64 bg-gray-50 border-r border-gray-200 flex flex-col">
         {/* Header */}
         <div className="p-6 border-b border-gray-100">
           <div className="flex items-center space-x-3">
@@ -178,59 +176,34 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col">
-        {/* Top Bar */}
-        <div className="h-16 bg-white/90 backdrop-blur-sm border-b border-white/20 flex items-center justify-between px-6">
-          <div className="flex items-center space-x-4">
-            <h2 className="text-lg font-semibold text-gray-900">
-              Workflow Builder
-            </h2>
-          </div>
-          <Button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-medium">
-            <Save className="w-4 h-4 mr-2" />
-            Save
-          </Button>
-        </div>
-
-        {/* Canvas Area */}
-        <div className="flex-1 relative">
-          <div className="absolute inset-0 bg-white m-6 rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
-            <ReactFlow
-              nodes={nodes}
-              edges={edges}
-              onNodesChange={onNodesChange}
-              onEdgesChange={onEdgesChange}
-              onConnect={onConnect}
-              nodeTypes={nodeTypes}
-              fitView
-              fitViewOptions={{
-                padding: 0.2,
-                includeHiddenNodes: false,
-              }}
-              defaultViewport={{ x: 0, y: 0, zoom: 0.8 }}
-              minZoom={0.1}
-              maxZoom={2}
-              attributionPosition="bottom-left"
-            >
-              <Background gap={20} size={1} color="#f1f5f9" />
-              <Controls
-                className="!bg-white !border !border-gray-200 !rounded-lg !shadow-lg"
-                showZoom={true}
-                showFitView={true}
-                showInteractive={false}
-              />
-            </ReactFlow>
-          </div>
-
-          {/* Bottom Actions */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-            <div className="bg-white/90 backdrop-blur-sm rounded-xl px-6 py-3 shadow-lg border border-white/30">
-              <Button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-2 rounded-lg font-medium">
-                Execute workflow
-              </Button>
-            </div>
-          </div>
+      {/* Main Content - Full React Flow */}
+      <div className="flex-1 relative">
+        <div className="absolute inset-0 bg-white">
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            nodeTypes={nodeTypes}
+            fitView
+            fitViewOptions={{
+              padding: 0.2,
+              includeHiddenNodes: false,
+            }}
+            defaultViewport={{ x: 0, y: 0, zoom: 0.8 }}
+            minZoom={0.1}
+            maxZoom={2}
+            attributionPosition="bottom-left"
+          >
+            <Background gap={20} size={1} color="#f1f5f9" />
+            <Controls
+              className="!bg-white !border !border-gray-200 !rounded-lg !shadow-lg"
+              showZoom={true}
+              showFitView={true}
+              showInteractive={false}
+            />
+          </ReactFlow>
         </div>
       </div>
     </div>
