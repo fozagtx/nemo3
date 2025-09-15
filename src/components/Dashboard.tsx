@@ -12,17 +12,16 @@ import ReactFlow, {
   Handle,
   Position,
 } from "reactflow";
-import { UserButton } from "@civic/auth/react";
+import { UserMenu } from "./UserMenu";
 import "reactflow/dist/style.css";
 import {
-  Play,
   Settings,
   Workflow,
   FolderOpen,
   Calendar,
-  Globe,
   Save,
   Plus,
+  Mic,
 } from "lucide-react";
 import { Button } from "./ui/button";
 
@@ -72,19 +71,19 @@ const initialNodes: Node[] = [
     id: "1",
     position: { x: 100, y: 200 },
     data: {
-      label: "When clicking 'Execute workflow'",
-      icon: Play,
-      description: "Trigger event",
+      label: "Ideation",
+      icon: Settings,
+      description: "Generate creative hooks and ideas",
     },
     type: "workflowStep",
   },
   {
     id: "2",
-    position: { x: 400, y: 100 },
+    position: { x: 400, y: 200 },
     data: {
-      label: "HTTP Request",
-      icon: Globe,
-      description: "GET https://api.example.com...",
+      label: "Script Writing",
+      icon: Workflow,
+      description: "Create engaging video scripts",
     },
     type: "workflowStep",
   },
@@ -92,9 +91,9 @@ const initialNodes: Node[] = [
     id: "3",
     position: { x: 700, y: 200 },
     data: {
-      label: "OpenAI",
-      icon: Settings,
-      description: "AI processing",
+      label: "Voice Over",
+      icon: Mic,
+      description: "Generate professional voice-over",
     },
     type: "workflowStep",
   },
@@ -140,12 +139,7 @@ export default function Dashboard() {
               <span className="text-white font-bold text-sm">N</span>
             </div>
             <div>
-              <h1 className="font-semibold text-gray-900">Nemo3base</h1>
-              <div className="flex items-center space-x-2 text-xs text-gray-500">
-                <span>Workflows</span>
-                <span>/</span>
-                <span>untitled-workflow</span>
-              </div>
+              <h1 className="font-semibold text-gray-900">Nemo3</h1>
             </div>
           </div>
         </div>
@@ -180,7 +174,7 @@ export default function Dashboard() {
 
         {/* User Section */}
         <div className="p-4 border-t border-gray-100">
-          <UserButton className="bg-gray-50 hover:bg-gray-100 rounded-lg p-2" />
+          <UserMenu />
         </div>
       </div>
 
@@ -201,7 +195,7 @@ export default function Dashboard() {
 
         {/* Canvas Area */}
         <div className="flex-1 relative">
-          <div className="absolute inset-0 bg-white/50 backdrop-blur-sm m-6 rounded-2xl shadow-xl border border-white/30 overflow-hidden">
+          <div className="absolute inset-0 bg-white m-6 rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
             <ReactFlow
               nodes={nodes}
               edges={edges}
