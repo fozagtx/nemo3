@@ -83,9 +83,9 @@ export function ScriptInputNode({ data }: ScriptInputNodeProps) {
           value={scriptText}
           onChange={(e) => setScriptText(e.target.value)}
           placeholder="Paste or type your script here..."
-          className="min-h-[120px] bg-white border-blue-200 focus:border-blue-400 focus:ring-blue-400 text-sm resize-none"
+          className="min-h-[120px] bg-white text-black border-blue-200 focus:border-blue-400 focus:ring-blue-400 text-sm resize-none"
           disabled={isTranscribing}
-        />
+        />{" "}
         <div className="absolute bottom-2 right-2 text-xs text-blue-500 bg-white px-2 py-0.5 rounded">
           {characterCount} chars · {wordCount} words
         </div>
