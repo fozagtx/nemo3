@@ -7,12 +7,12 @@ import {
 import { CivicAuthProvider, useUser } from "@civic/auth/react";
 import LandingPage from "./components/LandingPage";
 import Dashboard from "./components/Dashboard";
+import "reactflow/dist/style.css";
 import { Toaster } from "./components/ui/sonner";
 
 function AppRoutes() {
   const { user, isLoading, authStatus, error } = useUser();
 
-  // Debug logging for authentication state
   console.log("🔍 Auth State:", {
     user: user ? "authenticated" : "not authenticated",
     isLoading,
@@ -20,7 +20,6 @@ function AppRoutes() {
     error: error?.message,
   });
 
-  // Show loading spinner while authentication is in progress
   if (isLoading || authStatus === "authenticating") {
     return (
       <div className="min-h-screen bg-zinc-950 flex items-center justify-center">

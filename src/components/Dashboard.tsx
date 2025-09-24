@@ -1,8 +1,89 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import ReactFlow, {
+  Controls,
+  Background,
+  applyNodeChanges,
+  applyEdgeChanges,
+  Node,
+  Edge,
+  NodeChange,
+  EdgeChange,
+  Connection,
+  addEdge,
+} from "reactflow";
+import "reactflow/dist/style.css";
+
 import { UserMenu } from "./UserMenu";
-import { Settings, Mic, Sparkles } from "lucide-react";
+import { Mic, Settings, Sparkles } from "lucide-react";
+import { ScriptInputNode } from "./nodes/ScriptInputNode";
+import { AudioOutputNode } from "./nodes/AudioOutputNode";
 
 type WorkflowTab = "voiceover" | "ideation" | "script";
+
+const initialNodes: Node[] = [
+  {
+    id: "1",
+    type: "scriptInput",
+    position: { x: 100, y: 200 },
+    data: { onTranscribe: () => {} },
+  },
+  {
+    id: "2",
+    type: "audioOutput",
+    position: { x: 600, y: 100 },
+    data: {
+      audioUrl: null,
+      scriptText: "",
+      isGenerating: false,
+    },
+  },
+];
+
+const initialEdges: Edge[] = [
+  { id: "e1-2", source: "1", target: "2", animated: true },
+];
+
+const nodeTypes = {
+  scriptInput: ScriptInputNode,
+  audioOutput: AudioOutputNode,
+};
+
+function VoiceOverWorkflow() {
+  const [nodes, setNodes] = useState<Node[]>(initialNodes);
+  const [edges, setEdges] = useState<Edge[]>(initialEdges);
+
+  const onNodesChange = useCallback(
+    (changes: NodeChange[]) =>
+      setNodes((nds) => applyNodeChanges(changes, nds)),
+    [setNodes],
+  );
+  const onEdgesChange = useCallback(
+    (changes: EdgeChange[]) =>
+      setEdges((eds) => applyEdgeChanges(changes, eds)),
+    [setEdges],
+  );
+  const onConnect = useCallback(
+    (connection: Connection) => setEdges((eds) => addEdge(connection, eds)),
+    [setEdges],
+  );
+
+  return (
+    <div style={{ height: "100%", width: "100%" }}>
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        nodeTypes={nodeTypes}
+        fitView
+      >
+        <Controls />
+        <Background />
+      </ReactFlow>
+    </div>
+  );
+}
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<WorkflowTab>("voiceover");
@@ -107,6 +188,7 @@ export default function Dashboard() {
             )}
           </div>
         </div>
+        {activeTab === "voiceover" && <VoiceOverWorkflow />}
       </div>
     </div>
   );
