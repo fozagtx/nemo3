@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { UserMenu } from "./UserMenu";
-import { VoiceOver } from "./VoiceOver";
-import { Settings, FolderOpen, Calendar, Mic, Sparkles } from "lucide-react";
+import { Settings, Mic, Sparkles } from "lucide-react";
 
 type WorkflowTab = "voiceover" | "ideation" | "script";
 
@@ -77,26 +76,6 @@ export default function Dashboard() {
               })}
             </nav>
           </div>
-
-          {/* Additional Navigation */}
-          <div className="border-t border-gray-200 pt-4">
-            <nav className="space-y-1">
-              <a
-                href="#"
-                className="flex items-center space-x-3 px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-50 hover:text-gray-900"
-              >
-                <FolderOpen className="w-4 h-4" />
-                <span>Collections</span>
-              </a>
-              <a
-                href="#"
-                className="flex items-center space-x-3 px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-50 hover:text-gray-900"
-              >
-                <Calendar className="w-4 h-4" />
-                <span>History</span>
-              </a>
-            </nav>
-          </div>
         </div>
 
         {/* User Section */}
@@ -127,43 +106,6 @@ export default function Dashboard() {
               </div>
             )}
           </div>
-        </div>
-
-        {/* Content */}
-        <div className="flex-1 relative">
-          {activeTab === "voiceover" && <VoiceOver />}
-          {activeTab === "ideation" && (
-            <div className="h-full flex items-center justify-center bg-gray-50">
-              <div className="text-center">
-                <Sparkles className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  Content Ideation
-                </h3>
-                <p className="text-gray-500 mb-4">
-                  AI-powered content idea generation coming soon!
-                </p>
-                <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                  Coming Soon
-                </div>
-              </div>
-            </div>
-          )}
-          {activeTab === "script" && (
-            <div className="h-full flex items-center justify-center bg-gray-50">
-              <div className="text-center">
-                <Settings className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  Script Writer
-                </h3>
-                <p className="text-gray-500 mb-4">
-                  Advanced script writing tools coming soon!
-                </p>
-                <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                  Coming Soon
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>
