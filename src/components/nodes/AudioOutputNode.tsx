@@ -92,25 +92,25 @@ export function AudioOutputNode({ data }: AudioOutputNodeProps) {
   const renderContent = () => {
     if (data.isGenerating) {
       return (
-        <div className="space-y-4">
-          <div className="flex items-center justify-center py-8">
+        <div className="space-y-3 sm:space-y-4">
+          <div className="flex items-center justify-center py-6 sm:py-8">
             <div className="text-center">
-              <div className="w-12 h-12 border-3 border-green-200 border-t-green-600 rounded-full animate-spin mx-auto mb-3" />
-              <p className="text-green-700 font-medium">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 border-3 border-green-200 border-t-green-600 rounded-full animate-spin mx-auto mb-3" />
+              <p className="text-green-700 font-medium text-sm sm:text-base">
                 Generating voice-over...
               </p>
-              <p className="text-green-600 text-sm mt-1">
+              <p className="text-green-600 text-xs sm:text-sm mt-1">
                 Please wait, this may take a few seconds
               </p>
             </div>
           </div>
 
           {data.scriptText && (
-            <div className="p-3 bg-green-50 rounded-lg border border-green-200">
+            <div className="p-2 sm:p-3 bg-green-50 rounded-lg border border-green-200">
               <p className="text-green-700 text-xs mb-1 font-medium">
                 Processing script:
               </p>
-              <p className="text-green-900 text-sm line-clamp-3">
+              <p className="text-green-900 text-xs sm:text-sm line-clamp-3">
                 {data.scriptText}
               </p>
             </div>
@@ -121,10 +121,12 @@ export function AudioOutputNode({ data }: AudioOutputNodeProps) {
 
     if (!data.audioUrl) {
       return (
-        <div className="text-center py-8">
-          <Volume2 className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-          <p className="text-gray-600 font-medium">No audio generated yet</p>
-          <p className="text-gray-500 text-sm mt-1">
+        <div className="text-center py-6 sm:py-8">
+          <Volume2 className="w-10 h-10 sm:w-12 sm:h-12 text-gray-400 mx-auto mb-3" />
+          <p className="text-gray-600 font-medium text-sm sm:text-base">
+            No audio generated yet
+          </p>
+          <p className="text-gray-500 text-xs sm:text-sm mt-1">
             Paste the script text and generate voice-over
           </p>
         </div>
@@ -132,26 +134,26 @@ export function AudioOutputNode({ data }: AudioOutputNodeProps) {
     }
 
     return (
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {/* Script Preview */}
         {data.scriptText && (
-          <div className="p-3 bg-green-50 rounded-lg border border-green-200">
+          <div className="p-2 sm:p-3 bg-green-50 rounded-lg border border-green-200">
             <p className="text-green-700 text-xs mb-1 font-medium">
               Generated from:
             </p>
-            <p className="text-green-900 text-sm line-clamp-2">
+            <p className="text-green-900 text-xs sm:text-sm line-clamp-2">
               {data.scriptText}
             </p>
           </div>
         )}
 
         {/* Audio Player */}
-        <div className="bg-white rounded-lg p-4 border border-green-200">
-          <div className="flex items-center space-x-3 mb-3">
+        <div className="bg-white rounded-lg p-3 sm:p-4 border border-green-200">
+          <div className="flex items-center space-x-2 sm:space-x-3 mb-3">
             <Button
               onClick={handlePlayPause}
               size="sm"
-              className="bg-green-600 hover:bg-green-700 text-white w-10 h-10 rounded-full p-0"
+              className="bg-green-600 hover:bg-green-700 text-white w-9 h-9 sm:w-10 sm:h-10 rounded-full p-0"
             >
               {isPlaying ? (
                 <Pause className="w-4 h-4" />
@@ -161,7 +163,10 @@ export function AudioOutputNode({ data }: AudioOutputNodeProps) {
             </Button>
 
             <div className="flex-1">
-              <Progress value={progressPercent} className="h-2 bg-green-100" />
+              <Progress
+                value={progressPercent}
+                className="h-1.5 sm:h-2 bg-green-100"
+              />
               <div className="flex justify-between text-xs text-green-600 mt-1">
                 <span>{formatTime(currentTime)}</span>
                 <span>{formatTime(duration)}</span>
@@ -187,7 +192,7 @@ export function AudioOutputNode({ data }: AudioOutputNodeProps) {
           <Button
             onClick={handleDownload}
             size="sm"
-            className="bg-green-600 hover:bg-green-700 text-white"
+            className="bg-green-600 hover:bg-green-700 text-white text-xs sm:text-sm"
           >
             <Download className="w-3 h-3 mr-1" />
             Download MP3
@@ -198,7 +203,7 @@ export function AudioOutputNode({ data }: AudioOutputNodeProps) {
               onClick={data.onRegenerate}
               size="sm"
               variant="outline"
-              className="border-green-200 text-green-700 hover:bg-green-50"
+              className="border-green-200 text-green-700 hover:bg-green-50 text-xs sm:text-sm"
             >
               <RotateCcw className="w-3 h-3 mr-1" />
               Regenerate
@@ -211,7 +216,7 @@ export function AudioOutputNode({ data }: AudioOutputNodeProps) {
             onClick={data.onClear}
             size="sm"
             variant="outline"
-            className="w-full border-red-200 text-red-700 hover:bg-red-50"
+            className="w-full border-red-200 text-red-700 hover:bg-red-50 text-xs sm:text-sm"
           >
             <Trash2 className="w-3 h-3 mr-1" />
             Clear Audio
@@ -222,7 +227,7 @@ export function AudioOutputNode({ data }: AudioOutputNodeProps) {
   };
 
   return (
-    <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-4 shadow-lg min-w-[320px] max-w-[380px]">
+    <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-3 sm:p-4 shadow-lg w-full max-w-sm sm:min-w-[320px] sm:max-w-[380px]">
       <Handle
         type="target"
         position={Position.Left}
@@ -230,8 +235,8 @@ export function AudioOutputNode({ data }: AudioOutputNodeProps) {
       />
 
       {/* Header */}
-      <div className="flex items-center space-x-2 mb-4">
-        <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+      <div className="flex items-center space-x-2 mb-3 sm:mb-4">
+        <div className="w-7 h-7 sm:w-8 sm:h-8 bg-green-100 rounded-lg flex items-center justify-center">
           <Volume2 className="w-4 h-4 text-green-600" />
         </div>
         <div>

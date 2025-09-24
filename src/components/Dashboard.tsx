@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import ReactFlow, {
   Controls,
   Background,
@@ -18,6 +18,7 @@ import { ScriptInputNode } from "./nodes/ScriptInputNode";
 import { AudioOutputNode } from "./nodes/AudioOutputNode";
 import { textToSpeech, createAudioUrl } from "../lib/elevenlabs";
 import { toast } from "sonner";
+import { useIsMobile } from "../hooks/use-mobile";
 
 const nodeTypes = {
   scriptInput: ScriptInputNode,
@@ -27,6 +28,7 @@ const nodeTypes = {
 function VoiceOverWorkflow() {
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
+  const isMobile = useIsMobile();
 
   const handleTranscribe = useCallback(async (scriptText: string) => {
     setNodes((nds) =>
@@ -117,18 +119,18 @@ function VoiceOverWorkflow() {
     }
   }, [nodes, handleTranscribe]);
 
-  useState(() => {
+  useEffect(() => {
     const initialNodes: Node[] = [
       {
         id: "1",
         type: "scriptInput",
-        position: { x: 100, y: 200 },
+        position: isMobile ? { x: 50, y: 50 } : { x: 100, y: 200 },
         data: { onTranscribe: handleTranscribe },
       },
       {
         id: "2",
         type: "audioOutput",
-        position: { x: 600, y: 100 },
+        position: isMobile ? { x: 50, y: 550 } : { x: 600, y: 100 },
         data: {
           audioUrl: null,
           scriptText: "",
@@ -143,7 +145,7 @@ function VoiceOverWorkflow() {
     ];
     setNodes(initialNodes);
     setEdges(initialEdges);
-  });
+  }, [isMobile, handleTranscribe, handleClearAudio, handleRegenerate]);
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) =>
@@ -182,14 +184,16 @@ export default function Dashboard() {
   return (
     <div className="h-screen w-full bg-white flex flex-col">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-6 py-4">
+      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 sm:space-x-3">
             <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-pink-500 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">N</span>
             </div>
             <div>
-              <h1 className="font-semibold text-gray-900">Nemo3</h1>
+              <h1 className="font-semibold text-gray-900 text-base sm:text-lg">
+                Nemo3
+              </h1>
             </div>
           </div>
           <UserMenu />
