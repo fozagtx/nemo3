@@ -125,7 +125,7 @@ export function AudioOutputNode({ data }: AudioOutputNodeProps) {
           <Volume2 className="w-12 h-12 text-gray-400 mx-auto mb-3" />
           <p className="text-gray-600 font-medium">No audio generated yet</p>
           <p className="text-gray-500 text-sm mt-1">
-            Connect a script input node and generate voice-over
+            Paste the script text and generate voice-over
           </p>
         </div>
       );
