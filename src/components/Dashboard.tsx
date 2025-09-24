@@ -1,130 +1,33 @@
-import { useCallback, type ComponentType } from "react";
-import type { LucideIcon } from "lucide-react";
-import ReactFlow, {
-  Background,
-  Controls,
-  type Node,
-  type Edge,
-  useNodesState,
-  useEdgesState,
-  addEdge,
-  type Connection,
-  Handle,
-  Position,
-} from "reactflow";
+import { useState } from "react";
 import { UserMenu } from "./UserMenu";
-import "reactflow/dist/style.css";
-import {
-  Settings,
-  Workflow,
-  FolderOpen,
-  Calendar,
-  Plus,
-  Mic,
-} from "lucide-react";
+import { VoiceOver } from "./VoiceOver";
+import { Settings, FolderOpen, Calendar, Mic, Sparkles } from "lucide-react";
 
-// Custom node component for the workflow steps
-interface WorkflowNodeData {
-  label: string;
-  icon: LucideIcon;
-  description?: string;
-}
-
-function WorkflowNode({ data }: { data: WorkflowNodeData }) {
-  const IconComponent = data.icon;
-
-  return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-100 min-w-[180px] p-4">
-      <Handle
-        type="target"
-        position={Position.Left}
-        className="w-3 h-3 !bg-orange-400 !border-2 !border-white"
-      />
-      <div className="flex flex-col items-center space-y-3">
-        <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center">
-          <IconComponent className="w-5 h-5 text-gray-600" />
-        </div>
-        <div className="text-center">
-          <div className="font-medium text-gray-900 text-sm">{data.label}</div>
-          {data.description && (
-            <div className="text-xs text-gray-500 mt-1">{data.description}</div>
-          )}
-        </div>
-      </div>
-      <Handle
-        type="source"
-        position={Position.Right}
-        className="w-3 h-3 !bg-orange-400 !border-2 !border-white"
-      />
-    </div>
-  );
-}
-
-const nodeTypes = {
-  workflowStep: WorkflowNode,
-} satisfies Record<string, ComponentType<{ data: WorkflowNodeData }>>;
-
-const initialNodes: Node[] = [
-  {
-    id: "1",
-    position: { x: 100, y: 200 },
-    data: {
-      label: "Ideation",
-      icon: Settings,
-      description: "Generate creative hooks and ideas",
-    },
-    type: "workflowStep",
-  },
-  {
-    id: "2",
-    position: { x: 400, y: 200 },
-    data: {
-      label: "Script Writing",
-      icon: Workflow,
-      description: "Create engaging video scripts",
-    },
-    type: "workflowStep",
-  },
-  {
-    id: "3",
-    position: { x: 700, y: 200 },
-    data: {
-      label: "Voice Over",
-      icon: Mic,
-      description: "Generate professional voice-over",
-    },
-    type: "workflowStep",
-  },
-];
-
-const initialEdges: Edge[] = [
-  {
-    id: "e1-2",
-    source: "1",
-    target: "2",
-    type: "smoothstep",
-    style: { stroke: "#f97316", strokeWidth: 2 },
-    animated: false,
-  },
-  {
-    id: "e2-3",
-    source: "2",
-    target: "3",
-    type: "smoothstep",
-    style: { stroke: "#f97316", strokeWidth: 2 },
-    animated: false,
-  },
-];
+type WorkflowTab = "voiceover" | "ideation" | "script";
 
 export default function Dashboard() {
-  const [nodes, , onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [activeTab, setActiveTab] = useState<WorkflowTab>("voiceover");
 
-  const onConnect = useCallback(
-    (connection: Edge | Connection) =>
-      setEdges((eds) => addEdge(connection, eds)),
-    [setEdges],
-  );
+  const tabs = [
+    {
+      id: "voiceover" as const,
+      label: "Voice-Over Generator",
+      icon: Mic,
+      description: "Convert scripts to AI voice-overs",
+    },
+    {
+      id: "ideation" as const,
+      label: "Content Ideas",
+      icon: Sparkles,
+      description: "Coming soon",
+    },
+    {
+      id: "script" as const,
+      label: "Script Writer",
+      icon: Settings,
+      description: "Coming soon",
+    },
+  ];
 
   return (
     <div className="h-screen w-full bg-white flex">
@@ -144,30 +47,56 @@ export default function Dashboard() {
 
         {/* Navigation */}
         <div className="flex-1 p-4">
-          <nav className="space-y-1">
-            <a
-              href="#"
-              className="flex items-center space-x-3 px-3 py-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg"
-            >
-              <Workflow className="w-4 h-4" />
-              <span>Workflows</span>
-              <Plus className="w-4 h-4 ml-auto text-gray-400" />
-            </a>
-            <a
-              href="#"
-              className="flex items-center space-x-3 px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-50 hover:text-gray-900"
-            >
-              <FolderOpen className="w-4 h-4" />
-              <span>Collections</span>
-            </a>
-            <a
-              href="#"
-              className="flex items-center space-x-3 px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-50 hover:text-gray-900"
-            >
-              <Calendar className="w-4 h-4" />
-              <span>Executions</span>
-            </a>
-          </nav>
+          <div className="mb-4">
+            <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+              Workflows
+            </h2>
+            <nav className="space-y-1">
+              {tabs.map((tab) => {
+                const IconComponent = tab.icon;
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`w-full flex items-center space-x-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                      isActive
+                        ? "text-gray-900 bg-gray-100 border border-gray-200"
+                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    }`}
+                  >
+                    <IconComponent className="w-4 h-4" />
+                    <div className="flex-1 text-left">
+                      <div className="font-medium">{tab.label}</div>
+                      <div className="text-xs text-gray-500">
+                        {tab.description}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
+
+          {/* Additional Navigation */}
+          <div className="border-t border-gray-200 pt-4">
+            <nav className="space-y-1">
+              <a
+                href="#"
+                className="flex items-center space-x-3 px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-50 hover:text-gray-900"
+              >
+                <FolderOpen className="w-4 h-4" />
+                <span>Collections</span>
+              </a>
+              <a
+                href="#"
+                className="flex items-center space-x-3 px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-50 hover:text-gray-900"
+              >
+                <Calendar className="w-4 h-4" />
+                <span>History</span>
+              </a>
+            </nav>
+          </div>
         </div>
 
         {/* User Section */}
@@ -176,34 +105,65 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Main Content - Full React Flow */}
-      <div className="flex-1 relative">
-        <div className="absolute inset-0 bg-white">
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            nodeTypes={nodeTypes}
-            fitView
-            fitViewOptions={{
-              padding: 0.2,
-              includeHiddenNodes: false,
-            }}
-            defaultViewport={{ x: 0, y: 0, zoom: 0.8 }}
-            minZoom={0.1}
-            maxZoom={2}
-            attributionPosition="bottom-left"
-          >
-            <Background gap={20} size={1} color="#f1f5f9" />
-            <Controls
-              className="!bg-white !border !border-gray-200 !rounded-lg !shadow-lg"
-              showZoom={true}
-              showFitView={true}
-              showInteractive={false}
-            />
-          </ReactFlow>
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col">
+        {/* Header */}
+        <div className="bg-white border-b border-gray-200 px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-xl font-semibold text-gray-900">
+                {tabs.find((tab) => tab.id === activeTab)?.label}
+              </h1>
+              <p className="text-sm text-gray-500 mt-1">
+                {tabs.find((tab) => tab.id === activeTab)?.description}
+              </p>
+            </div>
+            {activeTab === "voiceover" && (
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                <span className="text-sm text-green-600 font-medium">
+                  Ready
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 relative">
+          {activeTab === "voiceover" && <VoiceOver />}
+          {activeTab === "ideation" && (
+            <div className="h-full flex items-center justify-center bg-gray-50">
+              <div className="text-center">
+                <Sparkles className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  Content Ideation
+                </h3>
+                <p className="text-gray-500 mb-4">
+                  AI-powered content idea generation coming soon!
+                </p>
+                <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                  Coming Soon
+                </div>
+              </div>
+            </div>
+          )}
+          {activeTab === "script" && (
+            <div className="h-full flex items-center justify-center bg-gray-50">
+              <div className="text-center">
+                <Settings className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  Script Writer
+                </h3>
+                <p className="text-gray-500 mb-4">
+                  Advanced script writing tools coming soon!
+                </p>
+                <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                  Coming Soon
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
