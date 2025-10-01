@@ -55,17 +55,13 @@ export default function LandingPage() {
 
         {/* Footer */}
         <motion.div
-          className="mb-8 text-center text-sm text-white flex flex-row gap-2 items-center justify-center"
+          className="mb-8 text-center text-sm text-white flex flex-row gap-2 items-center justify-center animate-pulse"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.8 }}
         >
           <div className="flex items-center gap-2">
             <span>Currently in beta</span>
-            <span>•</span>
-            <span className="text-zinc-300">
-              Powered by <span className="font-semibold text-white">sora2</span>
-            </span>
             <span>•</span>
             <span>Follow us on</span>
             <button
