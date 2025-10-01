@@ -1,7 +1,5 @@
 import { useState, useCallback } from "react";
 import { Handle, Position } from "reactflow";
-import { useState, useCallback } from "react";
-import { Handle, Position } from "@xyflow/react";
 import { FileText, Mic2, Copy, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
