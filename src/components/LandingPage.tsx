@@ -1,14 +1,12 @@
-import { motion } from 'framer-motion';
-import { Header } from './Header';
+import { motion } from "framer-motion";
+import { Header } from "./Header";
 
 export default function LandingPage() {
   return (
-    <div
-      className="min-h-screen bg-[url('/noice.png')] bg-cover bg-center relative overflow-hidden"
-    >
+    <div className="min-h-screen bg-[url('/noice.png')] bg-cover bg-center relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
-      
+
       {/* Header */}
       <Header />
 
@@ -20,7 +18,7 @@ export default function LandingPage() {
           transition={{ duration: 1 }}
           className="max-w-3xl mx-auto w-full flex-1 flex flex-col justify-center mt-4"
         >
-        <motion.div
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
@@ -29,7 +27,13 @@ export default function LandingPage() {
             <h1 className="text-white">Create TikTok-Ready UGC Ads</h1>
             <div className="flex justify-center gap-4 leading-[4rem] mt-0 md:mt-2">
               <div className="relative -rotate-[2.76deg] max-w-[350px] md:max-w-[454px] mt-2">
-                <img src="/frame.svg" height={79} width={459} alt="frame" className="w-full h-auto" />
+                <img
+                  src="/frame.svg"
+                  height={79}
+                  width={459}
+                  alt="frame"
+                  className="w-full h-auto"
+                />
                 <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg md:text-2xl text-center px-2">
                   AI-Generated Hooks & Voice-Overs
                 </span>
@@ -43,9 +47,10 @@ export default function LandingPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
           >
-         Ideate viral TikTok hooks, and get a professional voice-over for your ad all in one place. Perfect for UGC marketers and creators looking to stand out.
+            Ideate viral TikTok hooks, and get a professional voice-over for
+            your ad all in one place. Perfect for UGC marketers and creators
+            looking to stand out.
           </motion.p>
-
         </motion.div>
 
         {/* Footer */}
@@ -58,18 +63,26 @@ export default function LandingPage() {
           <div className="flex items-center gap-2">
             <span>Currently in beta</span>
             <span>•</span>
+            <span className="text-zinc-300">
+              Powered by <span className="font-semibold text-white">sora2</span>
+            </span>
+            <span>•</span>
             <span>Follow us on</span>
             <button
               onClick={() => {
-                console.log('X logo clicked!');
-                window.open('https://x.com/zanbuilds', '_blank', 'noopener,noreferrer');
+                console.log("X logo clicked!");
+                window.open(
+                  "https://x.com/zanbuilds",
+                  "_blank",
+                  "noopener,noreferrer",
+                );
               }}
               className="transition-all duration-200 hover:scale-110 cursor-pointer inline-block bg-transparent border-none p-0"
             >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                width="16" 
-                height="16" 
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
                 viewBox="0 0 50 50"
                 className="fill-current transition-all duration-200 hover:drop-shadow-sm"
               >
