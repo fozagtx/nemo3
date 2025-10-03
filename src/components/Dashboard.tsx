@@ -120,31 +120,35 @@ function VoiceOverWorkflow() {
   }, [nodes, handleTranscribe]);
 
   useEffect(() => {
-    const initialNodes: Node[] = [
-      {
-        id: "1",
-        type: "scriptInput",
-        position: isMobile ? { x: 50, y: 50 } : { x: 100, y: 200 },
-        data: { onTranscribe: handleTranscribe },
-      },
-      {
-        id: "2",
-        type: "audioOutput",
-        position: isMobile ? { x: 50, y: 550 } : { x: 600, y: 100 },
-        data: {
-          audioUrl: null,
-          scriptText: "",
-          isGenerating: false,
-          onClear: handleClearAudio,
-          onRegenerate: handleRegenerate,
+    setNodes((prevNodes) => {
+      if (prevNodes.length > 0) return prevNodes;
+
+      return [
+        {
+          id: "1",
+          type: "scriptInput",
+          position: isMobile ? { x: 50, y: 50 } : { x: 100, y: 200 },
+          data: { onTranscribe: handleTranscribe },
         },
-      },
-    ];
-    const initialEdges: Edge[] = [
-      { id: "e1-2", source: "1", target: "2", animated: true },
-    ];
-    setNodes(initialNodes);
-    setEdges(initialEdges);
+        {
+          id: "2",
+          type: "audioOutput",
+          position: isMobile ? { x: 50, y: 550 } : { x: 600, y: 100 },
+          data: {
+            audioUrl: null,
+            scriptText: "",
+            isGenerating: false,
+            onClear: handleClearAudio,
+            onRegenerate: handleRegenerate,
+          },
+        },
+      ];
+    });
+
+    setEdges((prevEdges) => {
+      if (prevEdges.length > 0) return prevEdges;
+      return [{ id: "e1-2", source: "1", target: "2", animated: true }];
+    });
   }, [isMobile, handleTranscribe, handleClearAudio, handleRegenerate]);
 
   const onNodesChange = useCallback(
