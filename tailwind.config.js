@@ -83,10 +83,19 @@ export default {
             height: "0",
           },
         },
+        glow: {
+          "0%, 100%": {
+            boxShadow: "0 0 5px #fff, 0 0 10px #fff, 0 0 15px #007bff, 0 0 20px #007bff, 0 0 25px #007bff, 0 0 30px #007bff, 0 0 35px #007bff",
+          },
+          "50%": {
+            boxShadow: "0 0 10px #fff, 0 0 20px #fff, 0 0 30px #007bff, 0 0 40px #007bff, 0 0 50px #007bff, 0 0 60px #007bff, 0 0 70px #007bff",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        glow: "glow 2s ease-in-out infinite",
       },
     },
   },
