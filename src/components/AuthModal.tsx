@@ -20,27 +20,14 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
           </div>
 
           <DialogTitle className="text-white text-2xl font-semibold">
-            Join Nemo3
+            Welcome to Nemo3
           </DialogTitle>
-
-          <p className="text-zinc-400 text-sm mt-2">
-            Unlock your first viral video idea in seconds
-          </p>
-
-          <p className="text-yellow-400 text-xs mt-1 font-medium">
-            Trusted by 100+ creators
-          </p>
         </DialogHeader>
 
         <div className="flex flex-col gap-5 mt-6">
-          <UserButton className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black hover:from-yellow-500 hover:to-yellow-600 transition-all duration-200 shadow-lg h-12 flex items-center justify-center gap-2 rounded-lg font-semibold" />
-
-          <button
-            className="text-zinc-400 text-sm hover:text-white transition"
-            onClick={() => onOpenChange(false)}
-          >
-            Continue as guest
-          </button>
+          <UserButton className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black hover:from-yellow-500 hover:to-yellow-600 transition-all duration-200 shadow-lg h-12 flex items-center justify-center gap-2 rounded-lg font-semibold">
+            Start Creating
+          </UserButton>
 
           <div className="text-center text-zinc-500 text-xs mt-2">
             By continuing, you agree to our{" "}
