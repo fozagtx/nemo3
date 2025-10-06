@@ -31,9 +31,6 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
           {/* CTA Button */}
           <div className="relative">
             <UserButton className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black hover:from-yellow-500 hover:to-yellow-600 transition-all duration-200 shadow-lg h-12 rounded-lg font-semibold" />
-            <span className="absolute inset-0 flex items-center justify-center text-black font-semibold pointer-events-none">
-              Start Free
-            </span>
           </div>
 
           {/* Legal - Minimal */}
