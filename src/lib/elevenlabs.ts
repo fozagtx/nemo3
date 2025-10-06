@@ -64,10 +64,6 @@ export function validateTextContent(text: string): boolean {
     throw new Error("Text content is required");
   }
 
-  if (trimmedText.length < 100) {
-    throw new Error("Content must be at least 100 characters long");
-  }
-
   const wordCount = trimmedText
     .split(/\s+/)
     .filter((word) => word.length > 0).length;
@@ -93,12 +89,9 @@ export async function textToSpeech(
   // Validate text content
   validateTextContent(text);
 
-  // Create conversational dialog from the content
-  const dialogContent = `Here's some interesting content I'd like to share with you. ${text}`;
-
   // Prepare request body
   const requestBody = {
-    text: dialogContent,
+    text: text,
     model_id: finalConfig.modelId,
     voice_settings: DEFAULT_VOICE_SETTINGS,
   };
@@ -140,26 +133,40 @@ export async function textToSpeech(
       throw error;
     }
 
+    const contentType = response.headers.get("content-type") || "";
+    if (contentType.includes("application/json")) {
+      const errorData = await response.json();
+      const errorMessage =
+        errorData.detail?.message ||
+        "API returned an unexpected JSON response instead of audio.";
+      throw {
+        message: errorMessage,
+        status: response.status,
+        details: errorData.detail,
+      };
+    }
+
     return await response.blob();
   } catch (error: unknown) {
-    const errorObj = error as { status?: number; message?: string };
-    // Handle specific error types
+    const errorObj = error as ElevenLabsError;
+
     if (errorObj.status === 401) {
       throw new Error("Invalid API key. Please check your ElevenLabs API key.");
-    } else if (errorObj.status === 429) {
+    }
+    if (errorObj.status === 429) {
       throw new Error(
         "API quota exceeded. Please check your ElevenLabs account limits.",
       );
-    } else if (
-      errorObj.message?.includes("network") ||
-      errorObj.message?.includes("fetch")
+    }
+    if (
+      error instanceof Error &&
+      (error.message.includes("network") || error.message.includes("fetch"))
     ) {
       throw new Error("Network error. Please check your internet connection.");
-    } else {
-      throw new Error(
-        `ElevenLabs API error: ${errorObj.message || "Unknown error"}`,
-      );
     }
+
+    // Re-throw the original error to preserve its properties for upstream handlers
+    throw error;
   }
 }
 
