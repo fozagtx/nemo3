@@ -24,6 +24,11 @@ export default function LandingPage() {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="inline-block font-bold tracking-tighter text-4xl md:text-[3rem]"
           >
+            <div className="text-center mb-4">
+              <span className="text-lg font-semibold text-white py-2 px-4 rounded-full animate-glow">
+                soraV2 coming
+              </span>
+            </div>
             <h1 className="text-white">Create TikTok-Ready UGC Ads</h1>
             <div className="flex justify-center gap-4 leading-[4rem] mt-0 md:mt-2">
               <div className="relative -rotate-[2.76deg] max-w-[350px] md:max-w-[454px] mt-2">
