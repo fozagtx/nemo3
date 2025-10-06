@@ -62,19 +62,19 @@ export function ScriptInputNode({ data }: ScriptInputNodeProps) {
     : 0;
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-3 sm:p-4 shadow-lg w-full max-w-sm sm:min-w-[320px] sm:max-w-[400px]">
+    <div className="bg-card border-2 border-border rounded-xl p-3 sm:p-4 shadow-lg w-full max-w-sm sm:min-w-[320px] sm:max-w-[400px]">
       <Handle
         type="target"
         position={Position.Left}
-        className="w-3 h-3 bg-blue-400 border-2 border-white"
+        className="w-3 h-3 bg-ring border-2 border-background"
       />
 
       {/* Header */}
       <div className="flex items-center space-x-2 mb-3 sm:mb-4">
-        <div className="w-7 h-7 sm:w-8 sm:h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-          <FileText className="w-4 h-4 text-blue-600" />
+        <div className="w-7 h-7 sm:w-8 sm:h-8 bg-secondary rounded-lg flex items-center justify-center">
+          <FileText className="w-4 h-4 text-secondary-foreground" />
         </div>
-        <h3 className="font-semibold text-blue-900 text-sm">Script Input</h3>
+        <h3 className="font-semibold text-foreground text-sm">Script Input</h3>
       </div>
 
       {/* Text Input */}
@@ -83,10 +83,10 @@ export function ScriptInputNode({ data }: ScriptInputNodeProps) {
           value={scriptText}
           onChange={(e) => setScriptText(e.target.value)}
           placeholder="Paste or type your script here..."
-          className="min-h-[100px] sm:min-h-[120px] bg-white text-black border-blue-200 focus:border-blue-400 focus:ring-blue-400 text-xs sm:text-sm resize-none"
+          className="min-h-[100px] sm:min-h-[120px] bg-background text-foreground border-input focus:ring-ring text-xs sm:text-sm resize-none"
           disabled={isTranscribing}
         />
-        <div className="absolute bottom-2 right-2 text-xs text-blue-500 bg-white px-1.5 py-0.5 rounded">
+        <div className="absolute bottom-2 right-2 text-xs text-muted-foreground bg-background px-1.5 py-0.5 rounded">
           {characterCount} chars · {wordCount} words
         </div>
       </div>
@@ -97,7 +97,7 @@ export function ScriptInputNode({ data }: ScriptInputNodeProps) {
           onClick={handlePaste}
           size="sm"
           variant="outline"
-          className="border-blue-200 text-blue-700 hover:bg-blue-50 flex-1 text-xs sm:text-sm"
+          className="flex-1 text-xs sm:text-sm"
           disabled={isTranscribing}
         >
           <Copy className="w-3 h-3 mr-1" /> Paste
@@ -105,8 +105,8 @@ export function ScriptInputNode({ data }: ScriptInputNodeProps) {
         <Button
           onClick={handleClear}
           size="sm"
-          variant="outline"
-          className="border-red-200 text-red-700 hover:bg-red-50 text-xs sm:text-sm"
+          variant="destructive"
+          className="text-xs sm:text-sm"
           disabled={isTranscribing || !scriptText}
         >
           <Trash2 className="w-3 h-3" />
@@ -119,11 +119,11 @@ export function ScriptInputNode({ data }: ScriptInputNodeProps) {
         disabled={
           isTranscribing || !scriptText.trim() || scriptText.trim().length < 10
         }
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs sm:text-sm"
+        className="w-full font-medium text-xs sm:text-sm"
       >
         {isTranscribing ? (
           <>
-            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+            <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin mr-2" />
             Processing...
           </>
         ) : (
@@ -134,7 +134,7 @@ export function ScriptInputNode({ data }: ScriptInputNodeProps) {
       </Button>
 
       {/* Tips */}
-      <div className="text-xs text-blue-600 bg-blue-50 p-2 rounded border border-blue-100 mt-3">
+      <div className="text-xs text-muted-foreground bg-secondary/50 p-2 rounded border border-border mt-3">
         <strong>Tips:</strong> Write in a conversational tone, include hooks,
         and keep scripts between 50–200 words for best results.
       </div>
@@ -142,7 +142,7 @@ export function ScriptInputNode({ data }: ScriptInputNodeProps) {
       <Handle
         type="source"
         position={Position.Right}
-        className="w-3 h-3 bg-blue-400 border-2 border-white"
+        className="w-3 h-3 bg-ring border-2 border-background"
       />
     </div>
   );
