@@ -1,3 +1,7 @@
+🏆 **Won 1st Place** in [Hackathon Name] — sponsored with **300 USDC**
+
+
+
 # nemo3
 
 Transform your text content into engaging audio in seconds using ElevenLabs AI.
