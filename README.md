@@ -1,4 +1,4 @@
-🏆 **Won 1st Place** in Civicauth — sponsored with 300 USDC
+
 
 
 
